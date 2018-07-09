@@ -1,4 +1,4 @@
-package de.theamychan.endergames.listener;
+package de.theamychan.endergames.listener.player;
 
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
@@ -35,8 +35,16 @@ public class PlayerJoinListener implements EventListener {
 
             player.getInventory().setItem( 0, new ItemBuilder( ItemChest.create( 1 ) ).setCustomName( "§6Kits" ).build() );
 
+            try{
+                player.teleport( plugin.getLocationAPI().getLocation( "Lobby", true ) );
+            }catch ( Exception ex ) {
+                player.teleport( player.getWorld().getSpawnLocation() );
+            }
+
             if(plugin.getIngame().size() >= plugin.getMinPlayers()){
-                //Start Countdown
+                if(!plugin.getLobbyCountdown().isRunning()){
+                    plugin.getLobbyCountdown().start();
+                }
             }
         }
     }
