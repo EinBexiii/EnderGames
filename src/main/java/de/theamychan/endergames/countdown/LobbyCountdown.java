@@ -1,6 +1,7 @@
 package de.theamychan.endergames.countdown;
 
 import de.theamychan.endergames.EnderGames;
+import de.theamychan.endergames.gamestate.GameState;
 import io.gomint.GoMint;
 import io.gomint.scheduler.Task;
 import lombok.Getter;
@@ -41,8 +42,8 @@ public class LobbyCountdown {
                     case 0:
                         stop();
                         GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§eAlle Spieler werden in die Arena teleportiert..." ) );
-
-                        //TODO Teleport
+                        GoMint.instance().getPlayers().forEach( all -> all.teleport( plugin.getWorld().getSpawnLocation() ) );
+                        GameState.setGameState( GameState.WAIT );
                         break;
                         default:
                             break;

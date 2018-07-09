@@ -2,6 +2,8 @@ package de.theamychan.endergames;
 
 import de.theamychan.endergames.countdown.LobbyCountdown;
 import de.theamychan.endergames.gamestate.GameState;
+import de.theamychan.endergames.listener.entity.EntityDamageByDamageListener;
+import de.theamychan.endergames.listener.entity.EntityDamageListener;
 import de.theamychan.endergames.listener.inventory.InventoryTransactionListener;
 import de.theamychan.endergames.listener.player.PlayerDropItemListener;
 import de.theamychan.endergames.listener.player.PlayerFoodLevelChangeListener;
@@ -76,6 +78,10 @@ public class EnderGames extends Plugin {
 
         //Countdown
         this.lobbyCountdown = new LobbyCountdown( this );
+
+        //Entity
+        this.registerListener( new EntityDamageListener( this ) );
+        this.registerListener( new EntityDamageByDamageListener( this ) );
 
         //Player
         this.registerListener( new PlayerJoinListener( this ) );
