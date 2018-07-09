@@ -17,7 +17,7 @@ public class PlayerFoodLevelChangeListener implements EventListener {
     public void onPlayerFoodLevelChange( PlayerFoodLevelChangeEvent e ) {
         EntityPlayer player = e.getPlayer();
 
-        if( GameState.getGameState().equals( GameState.LOBBY ) || GameState.getGameState().equals( GameState.WAIT ) || GameState.getGameState().equals( GameState.RESTART ) ){
+        if( GameState.getGameState().equals( GameState.LOBBY ) || GameState.getGameState().equals( GameState.WAIT ) || GameState.getGameState().equals( GameState.PEACEFUL ) || GameState.getGameState().equals( GameState.RESTART ) ){
             e.setCancelled( true );
         }else{
             if(!plugin.getIngame().contains( player )){

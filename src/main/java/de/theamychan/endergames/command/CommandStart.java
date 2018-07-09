@@ -33,11 +33,9 @@ public class CommandStart extends Command {
             }else{
                 output.fail( EnderGames.getInstance().getPrefix() + "§cDas Spiel startet bereits!" );
             }
-
         }else{
             output.fail( EnderGames.getInstance().getPrefix() + "§cDas Spiel läuft bereits!" );
         }
-
             return output;
     }
 }
