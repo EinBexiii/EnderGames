@@ -8,6 +8,8 @@ import io.gomint.event.EventListener;
 import io.gomint.event.entity.EntityDamageByEntityEvent;
 import lombok.AllArgsConstructor;
 
+import java.util.concurrent.TimeUnit;
+
 @AllArgsConstructor
 public class EntityDamageByDamageListener implements EventListener {
 
@@ -26,6 +28,9 @@ public class EntityDamageByDamageListener implements EventListener {
                     e.setCancelled( true );
                 }
             }
+            plugin.getLastDamager().put( player, damager );
+
+            plugin.getScheduler().scheduleAsync( ( ) -> plugin.getLastDamager().remove( player ), 30, TimeUnit.SECONDS );
 
         }
     }

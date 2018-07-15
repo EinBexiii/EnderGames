@@ -26,7 +26,7 @@ public class CommandSetSpectator extends Command {
 
             EnderGames.getInstance().getLocationAPI().addLocation( player.getLocation(), "Spectator", true );
             output.success( "Du hast den Spectatorspawn gesetzt!" );
-            
+
         }
 
         return output;
