@@ -9,9 +9,7 @@ import de.theamychan.endergames.gamestate.GameState;
 import de.theamychan.endergames.listener.entity.EntityDamageByDamageListener;
 import de.theamychan.endergames.listener.entity.EntityDamageListener;
 import de.theamychan.endergames.listener.inventory.InventoryTransactionListener;
-import de.theamychan.endergames.listener.player.PlayerDropItemListener;
-import de.theamychan.endergames.listener.player.PlayerFoodLevelChangeListener;
-import de.theamychan.endergames.listener.player.PlayerJoinListener;
+import de.theamychan.endergames.listener.player.*;
 import de.theamychan.endergames.listener.world.BlockBreakListener;
 import de.theamychan.endergames.listener.world.BlockPlaceListener;
 import de.theamychan.endergames.util.LocationAPI;
@@ -33,7 +31,9 @@ import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 
 @Depends( "SchematicSystem" )
@@ -74,6 +74,9 @@ public class EnderGames extends Plugin {
     private List<EntityPlayer> ingame = new ArrayList<>();
     @Getter
     private List<EntityPlayer> spectator = new ArrayList<>();
+
+    @Getter
+    private Map<EntityPlayer, EntityPlayer> lastDamager = new HashMap<>();
 
     @Override
     public void onInstall() {
@@ -124,6 +127,9 @@ public class EnderGames extends Plugin {
         this.registerListener( new PlayerJoinListener( this ) );
         this.registerListener( new PlayerDropItemListener( this ) );
         this.registerListener( new PlayerFoodLevelChangeListener( this ) );
+        this.registerListener( new PlayerDeathListener( this ) );
+        this.registerListener( new PlayerQuitListener( this ) );
+        this.registerListener( new PlayerRespawnListener( this ) );
 
         //Inventory
         this.registerListener( new InventoryTransactionListener( this ) );

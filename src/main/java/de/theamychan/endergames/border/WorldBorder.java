@@ -6,7 +6,6 @@ import io.gomint.entity.EntityPlayer;
 import io.gomint.math.Location;
 import io.gomint.math.Vector;
 import io.gomint.world.Particle;
-import io.gomint.world.ParticleData;
 import io.gomint.world.Sound;
 import io.gomint.world.SoundData;
 import io.gomint.world.block.BlockWoodenDoor;
@@ -35,6 +34,7 @@ public class WorldBorder {
                     vector.setY( (float) 0.5 );
                     player.setVelocity( vector );
                     player.playSound( player.getLocation(), Sound.BREAK, (byte) 1, SoundData.block( BlockWoodenDoor.class ) );
+                    player.sendMessage( plugin.getPrefix() + "§cDu hast das §eEnde der Welt §cerreicht " );
                 }
             }
 
@@ -51,9 +51,10 @@ public class WorldBorder {
                         for (int y = (int) min.getBlock().getLocation().getY(); y < max.getBlock().getLocation().getY(); y++) {
                             for (int z = (int) min.getBlock().getLocation().getZ(); z < max.getBlock().getLocation().getZ(); z++) {
                                 Location location = new Location( player.getWorld(), x, y, z );
-                                if ( location.distance( player.getWorld().getSpawnLocation() ) > radius && location.distance( player.getWorld().getSpawnLocation() ) < radius + 1 ) {
+                                if ( location.distance( player.getWorld().getSpawnLocation() ) > radius && location.distance( player.getWorld().getSpawnLocation() ) < radius + 4 ) {
                                     if(plugin.randomInt( 0, 20 ) == 0 || plugin.randomInt( 0, 30 ) == 5){
                                         player.getWorld().sendParticle( location, Particle.PORTAL );
+
                                     }
                                 }
                             }

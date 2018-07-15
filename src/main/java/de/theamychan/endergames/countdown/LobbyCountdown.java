@@ -32,9 +32,8 @@ public class LobbyCountdown {
 
             if(time != 0){
                 time--;
-
+                GoMint.instance().getPlayers().forEach( all -> all.setLevel( time ) );
                 switch ( time ) {
-
                     case 60: case 50: case 40: case 30: case 20: case 10: case 5: case 4: case 3: case 2:
                         GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Die Runde startet in §e" + time + " §7Sekunden" ) );
                         break;
@@ -68,6 +67,7 @@ public class LobbyCountdown {
         isRunning = false;
         task.cancel();
         time = 61;
+        GoMint.instance().getPlayers().forEach( all -> all.setLevel( 0 ) );
     }
 
 }
