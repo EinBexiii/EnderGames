@@ -51,6 +51,7 @@ public class WaitCountdown {
                         }
                         GameState.setGameState( GameState.PEACEFUL );
                         plugin.getPeacefulCountdown().start();
+                        plugin.getWorldBorder().start();
                         break;
                         default:
                             break;

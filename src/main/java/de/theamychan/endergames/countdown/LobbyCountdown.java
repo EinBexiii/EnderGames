@@ -43,10 +43,11 @@ public class LobbyCountdown {
                         break;
                     case 0:
                         stop();
-
+                        int id = 0;
                         for(EntityPlayer player : GoMint.instance().getPlayers()){
                             player.sendMessage( plugin.getPrefix() + "§eAlle Spieler werden in die Arena teleportiert..." );
-                            player.teleport( plugin.getWorld().getSpawnLocation() );
+                            id++;
+                            player.teleport( plugin.getLocationAPI().getLocation( "Spawn." + id, true ) );
                             player.getInventory().clear();
                             player.setImmobile( true );
                             player.setGamemode( Gamemode.SURVIVAL );

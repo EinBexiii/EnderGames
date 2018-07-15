@@ -1,5 +1,6 @@
 package de.theamychan.endergames;
 
+import de.theamychan.endergames.border.WorldBorder;
 import de.theamychan.endergames.countdown.LobbyCountdown;
 import de.theamychan.endergames.countdown.PeacefulCountdown;
 import de.theamychan.endergames.countdown.RestartCountdown;
@@ -14,8 +15,11 @@ import de.theamychan.endergames.listener.player.PlayerJoinListener;
 import de.theamychan.endergames.listener.world.BlockBreakListener;
 import de.theamychan.endergames.listener.world.BlockPlaceListener;
 import de.theamychan.endergames.util.LocationAPI;
+import de.theamychan.schematic.SchematicSystem;
 import io.gomint.GoMint;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.math.Location;
+import io.gomint.plugin.Depends;
 import io.gomint.plugin.Plugin;
 import io.gomint.plugin.PluginName;
 import io.gomint.plugin.Version;
@@ -30,7 +34,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
+@Depends( "SchematicSystem" )
 @PluginName( "EnderGames" )
 @Version( major = 1, minor = 0 )
 public class EnderGames extends Plugin {
@@ -38,7 +44,11 @@ public class EnderGames extends Plugin {
     @Getter
     private static EnderGames instance;
     @Getter
+    private SchematicSystem schematicSystem;
+    @Getter
     private LocationAPI locationAPI;
+    @Getter
+    private WorldBorder worldBorder;
 
     @Getter
     private LobbyCountdown lobbyCountdown;
@@ -56,9 +66,9 @@ public class EnderGames extends Plugin {
     private String prefix = "§f[§5EnderGames§f] ";
 
     @Getter
-    private int minPlayers = 1;
+    private int minPlayers = 2;
     @Getter
-    private int maxPlayers = 16;
+    private int maxPlayers = 24;
 
     @Getter
     private List<EntityPlayer> ingame = new ArrayList<>();
@@ -68,6 +78,8 @@ public class EnderGames extends Plugin {
     @Override
     public void onInstall() {
         instance = this;
+        schematicSystem = SchematicSystem.getInstance();
+
         GameState.setGameState( GameState.LOBBY );
         try {
             if(new File( "Arena" ).exists()){
@@ -83,9 +95,16 @@ public class EnderGames extends Plugin {
             this.getLogger().info( "EnderGames Arena wird erstellt..." );
             this.world = GoMint.instance().createWorld( "Arena", new CreateOptions().worldType( WorldType.GOMINT ).generator( NormalGenerator.class ) );
             this.getLogger().info( "EnderGames Arena wurde erstellt!" );
+            Location location = this.world.getSpawnLocation().add( 0, 50 , 0 );
+            this.schematicSystem.getSchematicManager().paste( location, "EnderGames", success -> {
+                if(success){
+                    this.getLogger().info( "Schematic wurde erfolgreich plaziert!" );
+                }
+            } );
         }
 
         this.locationAPI = new LocationAPI( this );
+        this.worldBorder = new WorldBorder( this );
 
         //Countdown
         this.lobbyCountdown = new LobbyCountdown( this );
