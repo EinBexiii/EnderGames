@@ -3,6 +3,7 @@ package de.theamychan.endergames.listener.entity;
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.entity.projectile.EntityArrow;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
 import io.gomint.event.entity.EntityDamageByEntityEvent;
@@ -31,7 +32,15 @@ public class EntityDamageByDamageListener implements EventListener {
             plugin.getLastDamager().put( player, damager );
 
             plugin.getScheduler().scheduleAsync( ( ) -> plugin.getLastDamager().remove( player ), 30, TimeUnit.SECONDS );
+        }else if(e.getAttacker() instanceof EntityArrow ){
+            EntityArrow shooter = (EntityArrow) e.getAttacker();
+            if(shooter instanceof EntityPlayer){
+                EntityPlayer player = (EntityPlayer) e.getEntity();
+                EntityPlayer shootPlayer = (EntityPlayer) shooter.getShooter();
 
+                plugin.getLastDamager().put( player, shootPlayer );
+                plugin.getScheduler().scheduleAsync( ( ) -> plugin.getLastDamager().remove( player ), 15, TimeUnit.SECONDS );
+            }
         }
     }
 

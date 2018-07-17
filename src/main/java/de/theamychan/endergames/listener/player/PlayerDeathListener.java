@@ -32,7 +32,7 @@ public class PlayerDeathListener implements EventListener {
         if ( plugin.getIngame().size() == 1 ) {
             EntityPlayer winner = plugin.getIngame().get( 0 );
             for (EntityPlayer all : GoMint.instance().getPlayers()) {
-                all.sendTitle( winner.getNameTag(), "§3hat Gewonnen!" );
+                all.sendTitle( winner.getNameTag(), "§6hat Gewonnen!" );
                 all.sendMessage( plugin.getPrefix() + "§r" + winner.getNameTag() + " §6hat die EnderGames gewonnen!" );
             }
 

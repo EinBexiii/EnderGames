@@ -32,8 +32,7 @@ public class PlayerRespawnListener implements EventListener {
             player.teleport( e.getRespawnLocation() );
             player.getInventory().setItem( 0, new ItemBuilder( ItemCompass.create( 1 ) ).setCustomName( "§6Teleporter" ).build() );
 
-            plugin.getScheduler().scheduleAsync( () -> {
-
+            plugin.getScheduler().schedule( () -> {
                 for (EntityPlayer ingamePlayers : plugin.getIngame()) {
                     ingamePlayers.hidePlayer( player );
                 }

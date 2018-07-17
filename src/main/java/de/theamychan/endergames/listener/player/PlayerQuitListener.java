@@ -37,8 +37,8 @@ public class PlayerQuitListener implements EventListener {
             if(plugin.getIngame().size() == 1){
                 EntityPlayer winner = plugin.getIngame().get( 0 );
                 for(EntityPlayer all : GoMint.instance().getPlayers()){
-                    all.sendTitle( player.getNameTag(), "§3hat Gewonnen!" );
-                    all.sendMessage( "§r" + player.getNameTag() + " §6hat die EnderGames gewonnen!" );
+                    all.sendTitle( winner.getNameTag(), "§6hat Gewonnen!" );
+                    all.sendMessage( "§r" + winner.getNameTag() + " §6hat die EnderGames gewonnen!" );
                 }
 
                 GameState.setGameState( GameState.RESTART );

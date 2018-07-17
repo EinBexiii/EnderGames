@@ -1,5 +1,6 @@
 package de.theamychan.endergames.util;
 
+import io.gomint.inventory.item.ItemBucket;
 import io.gomint.inventory.item.ItemStack;
 
 public class ItemBuilder {
@@ -27,6 +28,13 @@ public class ItemBuilder {
 
     public ItemBuilder setData( short data ) {
         this.itemStack.setData( data );
+        return this;
+    }
+
+    public ItemBuilder setContent( ItemBucket.Content content ){
+        if(itemStack instanceof ItemBucket){
+            ((ItemBucket) itemStack).setContent( content );
+        }
         return this;
     }
 

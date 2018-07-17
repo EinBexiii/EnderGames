@@ -8,6 +8,13 @@
     <artifactId>EnderGames</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>GoMint-public</id>
+            <url>https://repo.gomint.io/content/groups/public</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>

@@ -2,6 +2,7 @@ package de.theamychan.endergames.countdown;
 
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
+import de.theamychan.endergames.kit.KitBabar;
 import io.gomint.GoMint;
 import io.gomint.entity.EntityPlayer;
 import io.gomint.scheduler.Task;
@@ -45,13 +46,21 @@ public class WaitCountdown {
                         GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Das Spiel startet in §e" + time + " §7Sekunde" ) );
                         break;
                     case 0:
+                        stop();
                         for(EntityPlayer player : GoMint.instance().getPlayers()){
                             player.playSound( player.getLocation(), Sound.NOTE, (byte) 3 );
                             player.setImmobile( false );
+                            if(plugin.getKitManager().getKit( player ) != null){
+                                plugin.getKitManager().getKit( player ).setContent( player );
+                            }else{
+                                plugin.getKitManager().setKit( player, new KitBabar() );
+                            }
+                            player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                         }
                         GameState.setGameState( GameState.PEACEFUL );
                         plugin.getPeacefulCountdown().start();
                         plugin.getWorldBorder().start();
+                        plugin.getChestTeleportManager().start();
                         break;
                         default:
                             break;

@@ -6,12 +6,15 @@ import de.theamychan.endergames.countdown.PeacefulCountdown;
 import de.theamychan.endergames.countdown.RestartCountdown;
 import de.theamychan.endergames.countdown.WaitCountdown;
 import de.theamychan.endergames.gamestate.GameState;
+import de.theamychan.endergames.kit.manager.KitManager;
 import de.theamychan.endergames.listener.entity.EntityDamageByDamageListener;
 import de.theamychan.endergames.listener.entity.EntityDamageListener;
 import de.theamychan.endergames.listener.inventory.InventoryTransactionListener;
 import de.theamychan.endergames.listener.player.*;
 import de.theamychan.endergames.listener.world.BlockBreakListener;
 import de.theamychan.endergames.listener.world.BlockPlaceListener;
+import de.theamychan.endergames.manager.ChestManager;
+import de.theamychan.endergames.manager.ChestTeleportManager;
 import de.theamychan.endergames.util.LocationAPI;
 import de.theamychan.schematic.SchematicSystem;
 import io.gomint.GoMint;
@@ -49,6 +52,12 @@ public class EnderGames extends Plugin {
     private LocationAPI locationAPI;
     @Getter
     private WorldBorder worldBorder;
+    @Getter
+    private ChestManager chestManager;
+    @Getter
+    private ChestTeleportManager chestTeleportManager;
+    @Getter
+    private KitManager kitManager;
 
     @Getter
     private LobbyCountdown lobbyCountdown;
@@ -69,6 +78,8 @@ public class EnderGames extends Plugin {
     private int minPlayers = 2;
     @Getter
     private int maxPlayers = 24;
+    @Getter
+    private int radius = 450;
 
     @Getter
     private List<EntityPlayer> ingame = new ArrayList<>();
@@ -84,30 +95,12 @@ public class EnderGames extends Plugin {
         schematicSystem = SchematicSystem.getInstance();
 
         GameState.setGameState( GameState.LOBBY );
-        try {
-            if(new File( "Arena" ).exists()){
-                this.getLogger().info( "EnderGames Arena wird gelöscht..." );
-                FileUtils.deleteDirectory( new File( "Arena" ) );
-                this.getLogger().info( "EnderGames Arena wurde gelöscht!" );
-            }
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
-
-        if(!new File( "Arena" ).exists()){
-            this.getLogger().info( "EnderGames Arena wird erstellt..." );
-            this.world = GoMint.instance().createWorld( "Arena", new CreateOptions().worldType( WorldType.GOMINT ).generator( NormalGenerator.class ) );
-            this.getLogger().info( "EnderGames Arena wurde erstellt!" );
-            Location location = this.world.getSpawnLocation().add( 0, 50 , 0 );
-            this.schematicSystem.getSchematicManager().paste( location, "EnderGames", success -> {
-                if(success){
-                    this.getLogger().info( "Schematic wurde erfolgreich plaziert!" );
-                }
-            } );
-        }
 
         this.locationAPI = new LocationAPI( this );
         this.worldBorder = new WorldBorder( this );
+        this.chestManager = new ChestManager( this );
+        this.chestTeleportManager = new ChestTeleportManager( this );
+        this.kitManager = new KitManager( this );
 
         //Countdown
         this.lobbyCountdown = new LobbyCountdown( this );
@@ -130,14 +123,36 @@ public class EnderGames extends Plugin {
         this.registerListener( new PlayerDeathListener( this ) );
         this.registerListener( new PlayerQuitListener( this ) );
         this.registerListener( new PlayerRespawnListener( this ) );
+        this.registerListener( new PlayerInteractListener( this ) );
 
         //Inventory
         this.registerListener( new InventoryTransactionListener( this ) );
+
+        try {
+            if(new File( "Arena" ).exists()){
+                this.getLogger().info( "EnderGames Arena wird gelöscht..." );
+                FileUtils.deleteDirectory( new File( "Arena" ) );
+                this.getLogger().info( "EnderGames Arena wurde gelöscht!" );
+            }
+        } catch ( IOException e ) {
+            e.printStackTrace();
+        }
+
+        if(!new File( "Arena" ).exists()){
+            this.getLogger().info( "EnderGames Arena wird erstellt..." );
+            this.world = GoMint.instance().createWorld( "Arena", new CreateOptions().generator( NormalGenerator.class ) );
+            this.getLogger().info( "EnderGames Arena wurde erstellt!" );
+            Location location = this.world.getSpawnLocation().add( 0, 50 , 0 );
+            this.schematicSystem.getSchematicManager().paste( location, "EnderGames", success -> {
+                if(success){
+                    this.getLogger().info( "Schematic wurde erfolgreich plaziert!" );
+                }
+            } );
+        }
     }
 
     @Override
     public void onUninstall() {
-
     }
 
     public int randomInt( double min, double max ) {
