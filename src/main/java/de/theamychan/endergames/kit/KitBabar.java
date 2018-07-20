@@ -29,7 +29,7 @@ public class KitBabar implements Kit {
         armorInventory.setLeggings( new ItemBuilder( ItemLeatherLeggings.create( 1 ) ).build() );
         armorInventory.setBoots( new ItemBuilder( ItemLeatherBoots.create( 1 ) ).build() );
 
-        inventory.setItem( 0, new ItemBuilder( ItemWoodenSword.create( 1 ) ).build() );
+        inventory.addItem( new ItemBuilder( ItemWoodenSword.create( 1 ) ).build() );
 
     }
 

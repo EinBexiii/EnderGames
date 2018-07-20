@@ -36,8 +36,8 @@ public class KitArcher implements Kit, EventListener {
         Inventory inventory = player.getInventory();
         ArmorInventory armorInventory = player.getArmorInventory();
 
-        inventory.setItem( 0, new ItemBuilder( ItemBow.create( 1 ) ).build() );
-        inventory.setItem( 1, new ItemBuilder( ItemArrow.create( 10 ) ).build() );
+        inventory.addItem(  new ItemBuilder( ItemBow.create( 1 ) ).build() );
+        inventory.addItem(  new ItemBuilder( ItemArrow.create( 10 ) ).build() );
     }
 
     @EventHandler

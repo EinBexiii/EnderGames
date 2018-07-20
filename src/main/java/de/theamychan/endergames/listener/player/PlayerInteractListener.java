@@ -3,6 +3,7 @@ package de.theamychan.endergames.listener.player;
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
 import de.theamychan.endergames.kit.KitBabar;
+import io.gomint.entity.Entity;
 import io.gomint.entity.EntityPlayer;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
@@ -11,6 +12,7 @@ import io.gomint.gui.ButtonList;
 import io.gomint.gui.FormListener;
 import io.gomint.gui.FormResponse;
 import io.gomint.inventory.item.ItemChest;
+import io.gomint.inventory.item.ItemCompass;
 import io.gomint.inventory.item.ItemStack;
 import io.gomint.math.Location;
 import io.gomint.world.block.Block;
@@ -61,8 +63,31 @@ public class PlayerInteractListener implements EventListener {
                     locations.add( block.getLocation() );
                 }
             }
+            if(item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ){
+                player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke");
+            }
         }
 
+    }
+
+    private EntityPlayer getNearbyPlayer(EntityPlayer target) {
+        EntityPlayer nearestPlayer = null;
+        float nearestDistance = -1;
+
+        for(EntityPlayer player : target.getWorld().getPlayers()) {
+            if(player != target) {
+                if(nearestDistance == -1) {
+                    nearestDistance = player.getLocation().distance(target.getLocation());
+                    nearestPlayer = player;
+                } else
+                if(nearestDistance > (player.getLocation().distance(target.getLocation()))) {
+                    nearestDistance = player.getLocation().distance(target.getLocation());
+                    nearestPlayer = player;
+                }
+            }
+        }
+
+        return nearestPlayer;
     }
 
 }

@@ -3,8 +3,10 @@ package de.theamychan.endergames.countdown;
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
 import de.theamychan.endergames.kit.KitBabar;
+import de.theamychan.endergames.util.ItemBuilder;
 import io.gomint.GoMint;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.inventory.item.ItemCompass;
 import io.gomint.scheduler.Task;
 import io.gomint.world.Sound;
 import lombok.Getter;
@@ -50,6 +52,7 @@ public class WaitCountdown {
                         for(EntityPlayer player : GoMint.instance().getPlayers()){
                             player.playSound( player.getLocation(), Sound.NOTE, (byte) 3 );
                             player.setImmobile( false );
+                            player.getInventory().setItem( 0, new ItemBuilder( ItemCompass.create( 1 ) ).setCustomName( "§5Tracker" ).build() );
                             if(plugin.getKitManager().getKit( player ) != null){
                                 plugin.getKitManager().getKit( player ).setContent( player );
                             }else{
