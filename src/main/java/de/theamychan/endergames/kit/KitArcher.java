@@ -27,6 +27,11 @@ public class KitArcher implements Kit, EventListener {
     }
 
     @Override
+    public int getID() {
+        return 1;
+    }
+
+    @Override
     public int getPrice() {
         return 0;
     }

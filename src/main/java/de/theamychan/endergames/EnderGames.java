@@ -14,7 +14,8 @@ import de.theamychan.endergames.listener.player.*;
 import de.theamychan.endergames.listener.world.BlockBreakListener;
 import de.theamychan.endergames.listener.world.BlockPlaceListener;
 import de.theamychan.endergames.manager.ChestManager;
-import de.theamychan.endergames.manager.ChestTeleportManager;
+import de.theamychan.endergames.manager.ChestTeleport;
+import de.theamychan.endergames.manager.PlayerTeleport;
 import de.theamychan.endergames.util.LocationAPI;
 import de.theamychan.schematic.SchematicSystem;
 import io.gomint.GoMint;
@@ -25,7 +26,6 @@ import io.gomint.plugin.Plugin;
 import io.gomint.plugin.PluginName;
 import io.gomint.plugin.Version;
 import io.gomint.world.World;
-import io.gomint.world.WorldType;
 import io.gomint.world.generator.CreateOptions;
 import io.gomint.world.generator.integrated.NormalGenerator;
 import lombok.Getter;
@@ -37,7 +37,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 
 @Depends( "SchematicSystem" )
 @PluginName( "EnderGames" )
@@ -55,9 +54,11 @@ public class EnderGames extends Plugin {
     @Getter
     private ChestManager chestManager;
     @Getter
-    private ChestTeleportManager chestTeleportManager;
+    private ChestTeleport chestTeleportManager;
     @Getter
     private KitManager kitManager;
+    @Getter
+    private PlayerTeleport playerTeleport;
 
     @Getter
     private LobbyCountdown lobbyCountdown;
@@ -99,8 +100,9 @@ public class EnderGames extends Plugin {
         this.locationAPI = new LocationAPI( this );
         this.worldBorder = new WorldBorder( this );
         this.chestManager = new ChestManager( this );
-        this.chestTeleportManager = new ChestTeleportManager( this );
+        this.chestTeleportManager = new ChestTeleport( this );
         this.kitManager = new KitManager( this );
+        this.playerTeleport = new PlayerTeleport( this );
 
         //Countdown
         this.lobbyCountdown = new LobbyCountdown( this );

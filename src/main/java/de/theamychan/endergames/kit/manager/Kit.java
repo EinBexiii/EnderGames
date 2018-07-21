@@ -6,6 +6,8 @@ public interface Kit {
 
     String getName();
 
+    int getID();
+
     int getPrice();
 
     void setContent( EntityPlayer player );

@@ -15,6 +15,11 @@ public class KitBabar implements Kit {
     }
 
     @Override
+    public int getID() {
+        return 0;
+    }
+
+    @Override
     public int getPrice() {
         return 0;
     }

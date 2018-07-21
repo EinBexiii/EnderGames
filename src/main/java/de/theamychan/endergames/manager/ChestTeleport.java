@@ -12,11 +12,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class ChestTeleportManager {
+public class ChestTeleport {
 
     private EnderGames plugin;
 
-    public ChestTeleportManager( EnderGames plugin ) {
+    public ChestTeleport( EnderGames plugin ) {
         this.plugin = plugin;
     }
 
@@ -45,12 +45,7 @@ public class ChestTeleportManager {
         newBlock.setType( BlockEnderChest.class );
         enderchests.add( newBlock );
 
-        System.out.println(111);
-
-        plugin.getScheduler().schedule( () -> {
-            teleport();
-            System.out.println("Teleport");
-        }, plugin.randomInt( 30, 60 ), TimeUnit.SECONDS );
+        plugin.getScheduler().schedule( this::teleport, plugin.randomInt( 30, 60 ), TimeUnit.SECONDS );
 
     }
 

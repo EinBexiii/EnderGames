@@ -15,6 +15,7 @@ import io.gomint.inventory.item.ItemChest;
 import io.gomint.inventory.item.ItemCompass;
 import io.gomint.inventory.item.ItemStack;
 import io.gomint.math.Location;
+import io.gomint.world.Gamemode;
 import io.gomint.world.block.Block;
 import io.gomint.world.block.BlockEnderChest;
 
@@ -64,7 +65,11 @@ public class PlayerInteractListener implements EventListener {
                 }
             }
             if(item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ){
-                player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke");
+                if(getNearbyPlayer( player ) != null){
+                    player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke");
+                }else{
+                    player.sendMessage( plugin.getPrefix() + "§cEs konnte kein Spieler getrackt werden!" );
+                }
             }
         }
 
@@ -76,13 +81,15 @@ public class PlayerInteractListener implements EventListener {
 
         for(EntityPlayer player : target.getWorld().getPlayers()) {
             if(player != target) {
-                if(nearestDistance == -1) {
-                    nearestDistance = player.getLocation().distance(target.getLocation());
-                    nearestPlayer = player;
-                } else
-                if(nearestDistance > (player.getLocation().distance(target.getLocation()))) {
-                    nearestDistance = player.getLocation().distance(target.getLocation());
-                    nearestPlayer = player;
+                if(!plugin.getSpectator().contains( player ) && !player.getGamemode().equals( Gamemode.SPECTATOR )){
+                    if(nearestDistance == -1) {
+                        nearestDistance = player.getLocation().distance(target.getLocation());
+                        nearestPlayer = player;
+                    } else
+                    if(nearestDistance > (player.getLocation().distance(target.getLocation()))) {
+                        nearestDistance = player.getLocation().distance(target.getLocation());
+                        nearestPlayer = player;
+                    }
                 }
             }
         }

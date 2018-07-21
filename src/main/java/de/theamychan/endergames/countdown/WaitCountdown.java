@@ -36,7 +36,11 @@ public class WaitCountdown {
 
                 switch ( time ) {
 
-                    case 10: case 5: case 4: case 3:
+                    case 10: case 5: case 4:
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Das Spiel startet in §e" + time + " §7Sekunden" ) );
+                        break;
+                    case 3:
+                        GoMint.instance().getPlayers().forEach( all -> all.playSound( all.getLocation(), Sound.NOTE, (byte) 2 ) );
                         GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Das Spiel startet in §e" + time + " §7Sekunden" ) );
                         break;
                     case 2:
@@ -58,12 +62,14 @@ public class WaitCountdown {
                             }else{
                                 plugin.getKitManager().setKit( player, new KitBabar() );
                             }
+                            player.sendMessage( plugin.getPrefix() + "§eDas Spiel beginnt!" );
                             player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                         }
                         GameState.setGameState( GameState.PEACEFUL );
                         plugin.getPeacefulCountdown().start();
                         plugin.getWorldBorder().start();
                         plugin.getChestTeleportManager().start();
+                        plugin.getPlayerTeleport().start();
                         break;
                         default:
                             break;
