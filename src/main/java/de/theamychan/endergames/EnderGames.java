@@ -85,6 +85,8 @@ public class EnderGames extends Plugin {
     @Getter
     private List<EntityPlayer> ingame = new ArrayList<>();
     @Getter
+    private List<EntityPlayer> teleport = new ArrayList<>();
+    @Getter
     private List<EntityPlayer> spectator = new ArrayList<>();
 
     @Getter
@@ -126,6 +128,7 @@ public class EnderGames extends Plugin {
         this.registerListener( new PlayerQuitListener( this ) );
         this.registerListener( new PlayerRespawnListener( this ) );
         this.registerListener( new PlayerInteractListener( this ) );
+        this.registerListener( new PlayerMoveListener() );
 
         //Inventory
         this.registerListener( new InventoryTransactionListener( this ) );

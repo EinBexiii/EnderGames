@@ -22,6 +22,7 @@ public class PlayerQuitListener implements EventListener {
             GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§r" + player.getNameTag() + " §7hat das Spiel verlassen" ) );
             if(plugin.getIngame().contains( player )) plugin.getIngame().remove( player );
             if(plugin.getSpectator().contains( player )) plugin.getSpectator().remove( player );
+            if(plugin.getTeleport().contains( player )) plugin.getTeleport().remove( player );
 
             if(plugin.getIngame().size() < plugin.getMinPlayers()){
                 if(plugin.getLobbyCountdown().isRunning()){

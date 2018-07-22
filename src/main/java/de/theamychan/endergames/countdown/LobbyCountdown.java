@@ -48,12 +48,12 @@ public class LobbyCountdown {
                             id++;
                             player.teleport( plugin.getLocationAPI().getLocation( "Spawn." + id, true ) );
                             player.getInventory().clear();
-                            player.setImmobile( true );
                             player.setGamemode( Gamemode.SURVIVAL );
                         }
                         GameState.setGameState( GameState.WAIT );
 
                         plugin.getWaitCountdown().start();
+                        plugin.getPlayerTeleport().startTeleport();
 
                         break;
                         default:

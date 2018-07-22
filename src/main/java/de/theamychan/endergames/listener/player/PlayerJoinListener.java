@@ -36,6 +36,7 @@ public class PlayerJoinListener implements EventListener {
             player.getInventory().setItem( 0, new ItemBuilder( ItemChest.create( 1 ) ).setCustomName( "§6Kits" ).build() );
 
             if(!plugin.getIngame().contains( player )) plugin.getIngame().add( player );
+            if(!plugin.getTeleport().contains( player )) plugin.getTeleport().add( player );
 
             try{
                 player.teleport( plugin.getLocationAPI().getLocation( "Lobby", true ) );

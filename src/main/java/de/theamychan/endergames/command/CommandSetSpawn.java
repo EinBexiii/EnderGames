@@ -21,7 +21,9 @@ import java.util.Map;
 @Overload( {
         @Parameter( name = "lobby", validator = StringValidator.class, arguments = {".*"}, optional = true )
 } )
-@Overload( @Parameter( name = "id", validator = IntegerValidator.class, arguments = {".*"}, optional = true ) )
+@Overload( {
+        @Parameter( name = "id", validator = IntegerValidator.class, arguments = {".*"}, optional = true )
+} )
 
 public class CommandSetSpawn extends Command {
 
@@ -36,21 +38,21 @@ public class CommandSetSpawn extends Command {
         if ( sender instanceof PlayerCommandSender ) {
             EntityPlayer player = (EntityPlayer) sender;
 
-            if( spectator.equals( "" ) || spectator == null ) {
+            if( spectator.equals( "" ) ) {
                 output.fail( "Usage: /setspawn <spectator>" );
             } else {
                 EnderGames.getInstance().getLocationAPI().addLocation( player.getLocation(), "Spectator", true );
                 output.success( "Du hast den Spectatorspawn gesetzt!" );
             }
 
-            if( lobby.equals( "" ) || spectator == null ) {
+            if( lobby.equals( "" ) ) {
                 output.fail( "Usage: /setspawn <lobby>" );
             } else {
                 EnderGames.getInstance().getLocationAPI().addLocation( player.getLocation(), "Lobby", true );
                 output.success( "Du hast den Lobbyspawn gesetzt!" );
             }
 
-            if( id.equals( "" ) || id == null ) {
+            if( id == null ) {
                 output.fail( "Usage: /setspawn <id>" );
             } else {
                 EnderGames.getInstance().getLocationAPI().addLocation( player.getLocation(), "Spawn." + id, true );

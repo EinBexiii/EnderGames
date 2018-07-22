@@ -55,7 +55,6 @@ public class WaitCountdown {
                         stop();
                         for(EntityPlayer player : GoMint.instance().getPlayers()){
                             player.playSound( player.getLocation(), Sound.NOTE, (byte) 3 );
-                            player.setImmobile( false );
                             player.getInventory().setItem( 0, new ItemBuilder( ItemCompass.create( 1 ) ).setCustomName( "§5Tracker" ).build() );
                             if(plugin.getKitManager().getKit( player ) != null){
                                 plugin.getKitManager().getKit( player ).setContent( player );
@@ -69,7 +68,6 @@ public class WaitCountdown {
                         plugin.getPeacefulCountdown().start();
                         plugin.getWorldBorder().start();
                         plugin.getChestTeleportManager().start();
-                        plugin.getPlayerTeleport().start();
                         break;
                         default:
                             break;
