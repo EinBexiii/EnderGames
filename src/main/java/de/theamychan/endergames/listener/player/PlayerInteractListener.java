@@ -3,18 +3,22 @@ package de.theamychan.endergames.listener.player;
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
 import de.theamychan.endergames.kit.KitBabar;
+import io.gomint.GoMint;
 import io.gomint.entity.Entity;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.entity.projectile.EntityArrow;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
 import io.gomint.event.player.PlayerInteractEvent;
 import io.gomint.gui.ButtonList;
 import io.gomint.gui.FormListener;
 import io.gomint.gui.FormResponse;
+import io.gomint.inventory.item.ItemArrow;
 import io.gomint.inventory.item.ItemChest;
 import io.gomint.inventory.item.ItemCompass;
 import io.gomint.inventory.item.ItemStack;
 import io.gomint.math.Location;
+import io.gomint.math.Vector;
 import io.gomint.world.Gamemode;
 import io.gomint.world.block.Block;
 import io.gomint.world.block.BlockEnderChest;
@@ -76,6 +80,20 @@ public class PlayerInteractListener implements EventListener {
             }
         }
 
+    }
+
+    @EventHandler
+    public void onPlayerShootArrow(PlayerInteractEvent e){
+        EntityPlayer player = e.getPlayer();
+        ItemStack itemStack = player.getInventory().getItemInHand();
+
+        if(!GameState.getGameState().equals( GameState.LOBBY )){
+            if(itemStack instanceof ItemArrow ){
+                EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
+                entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
+                entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
+            }
+        }
     }
 
     private EntityPlayer getNearbyPlayer(EntityPlayer target) {

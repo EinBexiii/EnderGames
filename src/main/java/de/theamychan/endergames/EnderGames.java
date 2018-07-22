@@ -11,6 +11,7 @@ import de.theamychan.endergames.listener.entity.EntityDamageByDamageListener;
 import de.theamychan.endergames.listener.entity.EntityDamageListener;
 import de.theamychan.endergames.listener.inventory.InventoryTransactionListener;
 import de.theamychan.endergames.listener.player.*;
+import de.theamychan.endergames.listener.projectile.ProjectileHitEntityListener;
 import de.theamychan.endergames.listener.world.BlockBreakListener;
 import de.theamychan.endergames.listener.world.BlockPlaceListener;
 import de.theamychan.endergames.manager.ChestManager;
@@ -132,6 +133,9 @@ public class EnderGames extends Plugin {
 
         //Inventory
         this.registerListener( new InventoryTransactionListener( this ) );
+
+        //Projectile
+        this.registerListener( new ProjectileHitEntityListener( this ) );
 
         try {
             if(new File( "Arena" ).exists()){
