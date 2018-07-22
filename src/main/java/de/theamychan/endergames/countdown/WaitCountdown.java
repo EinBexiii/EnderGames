@@ -59,7 +59,7 @@ public class WaitCountdown {
                             if(plugin.getKitManager().getKit( player ) != null){
                                 plugin.getKitManager().getKit( player ).setContent( player );
                             }else{
-                                plugin.getKitManager().setKit( player, new KitBabar() );
+                                plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
                             }
                             player.sendMessage( plugin.getPrefix() + "§eDas Spiel beginnt!" );
                             player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
