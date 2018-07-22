@@ -6,6 +6,7 @@ import de.theamychan.endergames.kit.KitBabar;
 import io.gomint.GoMint;
 import io.gomint.entity.Entity;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.entity.potion.PotionEffect;
 import io.gomint.entity.projectile.EntityArrow;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
@@ -21,10 +22,13 @@ import io.gomint.math.Location;
 import io.gomint.math.Vector;
 import io.gomint.world.Gamemode;
 import io.gomint.world.block.Block;
+import io.gomint.world.block.BlockAir;
 import io.gomint.world.block.BlockEnderChest;
+import io.gomint.world.block.BlockObsidian;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 
 public class PlayerInteractListener implements EventListener {
@@ -43,19 +47,19 @@ public class PlayerInteractListener implements EventListener {
         ItemStack item = player.getInventory().getItemInHand();
         Block block = e.getBlock();
 
-        if( GameState.getGameState().equals( GameState.LOBBY )){
+        if ( GameState.getGameState().equals( GameState.LOBBY ) ) {
 
-            if(item instanceof ItemChest && item.getCustomName().equalsIgnoreCase( "§6Kits" ) ){
+            if ( item instanceof ItemChest && item.getCustomName().equalsIgnoreCase( "§6Kits" ) ) {
                 ButtonList buttonList = ButtonList.create( "§6Kits" );
                 buttonList.addButton( "kitBabar", "Babar" );
                 buttonList.addButton( "kitArcher", "Archer" );
                 buttonList.addButton( "kitDieb", "Dieb" );
-                player.showForm( buttonList ).onResponse( id ->  {
-                    if(id.equals( "kitBabar" )){
+                player.showForm( buttonList ).onResponse( id -> {
+                    if ( id.equals( "kitBabar" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
-                    }else if(id.equals( "kitArcher" )){
+                    } else if ( id.equals( "kitArcher" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitArcher() );
-                    }else if(id.equals( "kitDieb" )){
+                    } else if ( id.equals( "kitDieb" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitDieb() );
                     }
                     player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
@@ -63,18 +67,18 @@ public class PlayerInteractListener implements EventListener {
 
             }
 
-        }else if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
-            if(block instanceof BlockEnderChest ){
+        } else if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
+            if ( block instanceof BlockEnderChest ) {
                 BlockEnderChest chest = (BlockEnderChest) block;
-                if(!locations.contains( chest.getLocation() )){
+                if ( !locations.contains( chest.getLocation() ) ) {
                     plugin.getChestManager().fillChest( chest );
                     locations.add( block.getLocation() );
                 }
             }
-            if(item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ){
-                if(getNearbyPlayer( player ) != null){
-                    player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke");
-                }else{
+            if ( item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ) {
+                if ( getNearbyPlayer( player ) != null ) {
+                    player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke" );
+                } else {
                     player.sendMessage( plugin.getPrefix() + "§cEs konnte kein Spieler getrackt werden!" );
                 }
             }
@@ -83,12 +87,12 @@ public class PlayerInteractListener implements EventListener {
     }
 
     @EventHandler
-    public void onPlayerShootArrow(PlayerInteractEvent e){
+    public void onPlayerShootArrow( PlayerInteractEvent e ) {
         EntityPlayer player = e.getPlayer();
         ItemStack itemStack = player.getInventory().getItemInHand();
 
-        if(!GameState.getGameState().equals( GameState.LOBBY )){
-            if(itemStack instanceof ItemArrow ){
+        if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
+            if ( itemStack instanceof ItemArrow ) {
                 EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
                 entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
                 entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
@@ -96,19 +100,29 @@ public class PlayerInteractListener implements EventListener {
         }
     }
 
-    private EntityPlayer getNearbyPlayer(EntityPlayer target) {
+    @EventHandler
+    public void onPlayerHitSpeedBlock( PlayerInteractEvent e ) {
+        EntityPlayer player = e.getPlayer();
+        Block block = e.getBlock();
+
+        if ( block instanceof BlockObsidian ) {
+            block.setType( BlockAir.class );
+            player.addEffect( PotionEffect.SPEED, 1, 31, TimeUnit.SECONDS );
+        }
+    }
+
+    private EntityPlayer getNearbyPlayer( EntityPlayer target ) {
         EntityPlayer nearestPlayer = null;
         float nearestDistance = -1;
 
-        for(EntityPlayer player : target.getWorld().getPlayers()) {
-            if(player != target) {
-                if(!plugin.getSpectator().contains( player ) && !player.getGamemode().equals( Gamemode.SPECTATOR )){
-                    if(nearestDistance == -1) {
-                        nearestDistance = player.getLocation().distance(target.getLocation());
+        for (EntityPlayer player : target.getWorld().getPlayers()) {
+            if ( player != target ) {
+                if ( !plugin.getSpectator().contains( player ) && !player.getGamemode().equals( Gamemode.SPECTATOR ) ) {
+                    if ( nearestDistance == -1 ) {
+                        nearestDistance = player.getLocation().distance( target.getLocation() );
                         nearestPlayer = player;
-                    } else
-                    if(nearestDistance > (player.getLocation().distance(target.getLocation()))) {
-                        nearestDistance = player.getLocation().distance(target.getLocation());
+                    } else if ( nearestDistance > (player.getLocation().distance( target.getLocation() )) ) {
+                        nearestDistance = player.getLocation().distance( target.getLocation() );
                         nearestPlayer = player;
                     }
                 }

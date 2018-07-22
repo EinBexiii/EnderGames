@@ -17,6 +17,7 @@ import de.theamychan.endergames.listener.world.BlockPlaceListener;
 import de.theamychan.endergames.manager.ChestManager;
 import de.theamychan.endergames.manager.ChestTeleport;
 import de.theamychan.endergames.manager.PlayerTeleport;
+import de.theamychan.endergames.manager.SpeedBlockTeleport;
 import de.theamychan.endergames.util.LocationAPI;
 import de.theamychan.schematic.SchematicSystem;
 import io.gomint.GoMint;
@@ -57,6 +58,8 @@ public class EnderGames extends Plugin {
     @Getter
     private ChestTeleport chestTeleportManager;
     @Getter
+    private SpeedBlockTeleport speedBlockTeleport;
+    @Getter
     private KitManager kitManager;
     @Getter
     private PlayerTeleport playerTeleport;
@@ -81,7 +84,7 @@ public class EnderGames extends Plugin {
     @Getter
     private int maxPlayers = 24;
     @Getter
-    private int radius = 450;
+    private int radius = 350;
 
     @Getter
     private List<EntityPlayer> ingame = new ArrayList<>();
@@ -104,6 +107,7 @@ public class EnderGames extends Plugin {
         this.worldBorder = new WorldBorder( this );
         this.chestManager = new ChestManager( this );
         this.chestTeleportManager = new ChestTeleport( this );
+        this.speedBlockTeleport = new SpeedBlockTeleport( this );
         this.kitManager = new KitManager( this );
         this.playerTeleport = new PlayerTeleport( this );
 
