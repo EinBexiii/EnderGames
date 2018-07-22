@@ -42,13 +42,12 @@ public class PlayerInteractListener implements EventListener {
     private List<Location> locations = new ArrayList<>();
 
     @EventHandler
-    public void onPlayerInteract( PlayerInteractEvent e ) {
+    public void onPlayerSelectKit( PlayerInteractEvent e ) {
         EntityPlayer player = e.getPlayer();
         ItemStack item = player.getInventory().getItemInHand();
         Block block = e.getBlock();
 
         if ( GameState.getGameState().equals( GameState.LOBBY ) ) {
-
             if ( item instanceof ItemChest && item.getCustomName().equalsIgnoreCase( "§6Kits" ) ) {
                 ButtonList buttonList = ButtonList.create( "§6Kits" );
                 buttonList.addButton( "kitBabar", "Babar" );
@@ -64,10 +63,17 @@ public class PlayerInteractListener implements EventListener {
                     }
                     player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                 } );
-
             }
+        }
+    }
 
-        } else if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
+    @EventHandler
+    public void onPlayerOpenEnderchest(PlayerInteractEvent e){
+        EntityPlayer player = e.getPlayer();
+        Block block = e.getBlock();
+        ItemStack item = player.getInventory().getItemInHand();
+
+        if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
             if ( block instanceof BlockEnderChest ) {
                 BlockEnderChest chest = (BlockEnderChest) block;
                 if ( !locations.contains( chest.getLocation() ) ) {
@@ -75,15 +81,7 @@ public class PlayerInteractListener implements EventListener {
                     locations.add( block.getLocation() );
                 }
             }
-            if ( item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ) {
-                if ( getNearbyPlayer( player ) != null ) {
-                    player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke" );
-                } else {
-                    player.sendMessage( plugin.getPrefix() + "§cEs konnte kein Spieler getrackt werden!" );
-                }
-            }
         }
-
     }
 
     @EventHandler
@@ -108,6 +106,20 @@ public class PlayerInteractListener implements EventListener {
         if ( block instanceof BlockObsidian ) {
             block.setType( BlockAir.class );
             player.addEffect( PotionEffect.SPEED, 1, 31, TimeUnit.SECONDS );
+        }
+    }
+
+    @EventHandler
+    public void onPlayerTrackTarget(PlayerInteractEvent e){
+        EntityPlayer player = e.getPlayer();
+        ItemStack item = player.getInventory().getItemInHand();
+        
+        if ( item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ) {
+            if ( getNearbyPlayer( player ) != null ) {
+                player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke" );
+            } else {
+                player.sendMessage( plugin.getPrefix() + "§cEs konnte kein Spieler getrackt werden!" );
+            }
         }
     }
 
