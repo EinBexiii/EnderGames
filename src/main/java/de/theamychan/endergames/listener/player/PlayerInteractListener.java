@@ -45,11 +45,14 @@ public class PlayerInteractListener implements EventListener {
                 ButtonList buttonList = ButtonList.create( "§6Kits" );
                 buttonList.addButton( "kitBabar", "Babar" );
                 buttonList.addButton( "kitArcher", "Archer" );
+                buttonList.addButton( "kitDieb", "Dieb" );
                 player.showForm( buttonList ).onResponse( id ->  {
                     if(id.equals( "kitBabar" )){
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
                     }else if(id.equals( "kitArcher" )){
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitArcher() );
+                    }else if(id.equals( "kitDieb" )){
+                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitDieb() );
                     }
                     player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                 } );
