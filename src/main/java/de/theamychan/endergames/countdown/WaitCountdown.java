@@ -2,7 +2,6 @@ package de.theamychan.endergames.countdown;
 
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
-import de.theamychan.endergames.kit.KitBabar;
 import de.theamychan.endergames.util.ItemBuilder;
 import io.gomint.GoMint;
 import io.gomint.entity.EntityPlayer;
@@ -60,6 +59,7 @@ public class WaitCountdown {
                                 plugin.getKitManager().getKit( player ).setContent( player );
                             }else{
                                 plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
+                                plugin.getKitManager().getKit( player ).setContent( player );
                             }
                             player.sendMessage( plugin.getPrefix() + "§eDas Spiel beginnt!" );
                             player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
