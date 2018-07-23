@@ -33,13 +33,18 @@ public class EntityDamageByDamageListener implements EventListener {
 
             plugin.getScheduler().scheduleAsync( ( ) -> plugin.getLastDamager().remove( player ), 30, TimeUnit.SECONDS );
         }else if(e.getAttacker() instanceof EntityArrow ){
-            if(((EntityArrow) e.getAttacker()).getShooter() instanceof EntityPlayer){
-                EntityPlayer player = (EntityPlayer) e.getEntity();
-                EntityPlayer shootPlayer = (EntityPlayer) ((EntityArrow) e.getAttacker()).getShooter();
+            if(GameState.getGameState().equals( GameState.PEACEFUL )){
+                e.setCancelled( true );
+            }else{
+                if(((EntityArrow) e.getAttacker()).getShooter() instanceof EntityPlayer){
+                    EntityPlayer player = (EntityPlayer) e.getEntity();
+                    EntityPlayer shootPlayer = (EntityPlayer) ((EntityArrow) e.getAttacker()).getShooter();
 
-                plugin.getLastDamager().put( player, shootPlayer );
-                plugin.getScheduler().scheduleAsync( ( ) -> plugin.getLastDamager().remove( player ), 15, TimeUnit.SECONDS );
+                    plugin.getLastDamager().put( player, shootPlayer );
+                    plugin.getScheduler().scheduleAsync( ( ) -> plugin.getLastDamager().remove( player ), 15, TimeUnit.SECONDS );
+                }
             }
+
         }
     }
 

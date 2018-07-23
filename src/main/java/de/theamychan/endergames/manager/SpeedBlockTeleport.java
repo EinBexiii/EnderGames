@@ -8,6 +8,7 @@ import io.gomint.world.block.Block;
 import io.gomint.world.block.BlockAir;
 import io.gomint.world.block.BlockEnderChest;
 import io.gomint.world.block.BlockObsidian;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class SpeedBlockTeleport {
         this.plugin = plugin;
     }
 
+    @Getter
     private List<Block> blocks = new ArrayList<>();
 
     public void start(){

@@ -4,6 +4,7 @@ import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.kit.KitArcher;
 import de.theamychan.endergames.kit.KitBabar;
 import de.theamychan.endergames.kit.KitDieb;
+import de.theamychan.endergames.kit.KitSchinken;
 import io.gomint.entity.EntityPlayer;
 import lombok.Getter;
 
@@ -18,6 +19,8 @@ public class KitManager {
     private KitArcher kitArcher;
     @Getter
     private KitDieb kitDieb;
+    @Getter
+    private KitSchinken kitSchinken;
 
     private Map<EntityPlayer, Kit> kit = new HashMap<>();
 
@@ -25,6 +28,7 @@ public class KitManager {
         this.kitBabar = new KitBabar();
         this.kitArcher = new KitArcher( plugin );
         this.kitDieb = new KitDieb( plugin );
+        this.kitSchinken = new KitSchinken( plugin );
     }
 
     public void setKit( EntityPlayer player, Kit kit){

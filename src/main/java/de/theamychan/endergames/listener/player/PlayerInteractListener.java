@@ -53,6 +53,7 @@ public class PlayerInteractListener implements EventListener {
                 buttonList.addButton( "kitBabar", "Babar" );
                 buttonList.addButton( "kitArcher", "Archer" );
                 buttonList.addButton( "kitDieb", "Dieb" );
+                buttonList.addButton( "kitSchinken", "Schinken" );
                 player.showForm( buttonList ).onResponse( id -> {
                     if ( id.equals( "kitBabar" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
@@ -60,6 +61,8 @@ public class PlayerInteractListener implements EventListener {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitArcher() );
                     } else if ( id.equals( "kitDieb" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitDieb() );
+                    } else if ( id.equals( "kitSchinken" ) ) {
+                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSchinken() );
                     }
                     player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                 } );
@@ -68,7 +71,7 @@ public class PlayerInteractListener implements EventListener {
     }
 
     @EventHandler
-    public void onPlayerOpenEnderchest(PlayerInteractEvent e){
+    public void onPlayerOpenEnderchest( PlayerInteractEvent e ) {
         EntityPlayer player = e.getPlayer();
         Block block = e.getBlock();
         ItemStack item = player.getInventory().getItemInHand();
@@ -94,6 +97,9 @@ public class PlayerInteractListener implements EventListener {
                 EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
                 entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
                 entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
+                itemStack.setAmount( itemStack.getAmount() - 1 );
+
+                player.getInventory().setItem( player.getInventory().getItemInHandSlot(), itemStack);
             }
         }
     }
@@ -103,14 +109,14 @@ public class PlayerInteractListener implements EventListener {
         EntityPlayer player = e.getPlayer();
         Block block = e.getBlock();
 
-        if ( block instanceof BlockObsidian ) {
+        if ( block instanceof BlockObsidian && plugin.getSpeedBlockTeleport().getBlocks().contains( block )) {
             block.setType( BlockAir.class );
             player.addEffect( PotionEffect.SPEED, 1, 31, TimeUnit.SECONDS );
         }
     }
 
     @EventHandler
-    public void onPlayerTrackTarget(PlayerInteractEvent e){
+    public void onPlayerTrackTarget( PlayerInteractEvent e ) {
         EntityPlayer player = e.getPlayer();
         ItemStack item = player.getInventory().getItemInHand();
 
