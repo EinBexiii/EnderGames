@@ -142,7 +142,7 @@ public class EnderGames extends Plugin {
         this.registerListener( new ProjectileHitEntityListener( this ) );
 
         try {
-            if(new File( "Arena" ).exists()){
+            if ( new File( "Arena" ).exists() ) {
                 this.getLogger().info( "EnderGames Arena wird gelöscht..." );
                 FileUtils.deleteDirectory( new File( "Arena" ) );
                 this.getLogger().info( "EnderGames Arena wurde gelöscht!" );
@@ -151,13 +151,13 @@ public class EnderGames extends Plugin {
             e.printStackTrace();
         }
 
-        if(!new File( "Arena" ).exists()){
+        if ( !new File( "Arena" ).exists() ) {
             this.getLogger().info( "EnderGames Arena wird erstellt..." );
             this.world = GoMint.instance().createWorld( "Arena", new CreateOptions().generator( NormalGenerator.class ) );
             this.getLogger().info( "EnderGames Arena wurde erstellt!" );
-            Location location = this.world.getSpawnLocation().add( 0, 50 , 0 );
+            Location location = this.world.getSpawnLocation().add( 0, 50, 0 );
             this.schematicSystem.getSchematicManager().paste( location, "EnderGames", success -> {
-                if(success){
+                if ( success ) {
                     this.getLogger().info( "Schematic wurde erfolgreich plaziert!" );
                 }
             } );
@@ -169,7 +169,7 @@ public class EnderGames extends Plugin {
     }
 
     public int randomInt( double min, double max ) {
-        return (int) Math.round( min + Math.random() * ( max - min ) );
+        return (int) Math.round( min + Math.random() * (max - min) );
     }
 
 }

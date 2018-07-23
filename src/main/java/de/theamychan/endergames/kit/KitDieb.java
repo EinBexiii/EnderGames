@@ -29,6 +29,11 @@ public class KitDieb implements Kit, EventListener {
     }
 
     @Override
+    public String getDescription() {
+        return "Fähigkeit: Die Truhe wird sofort geleert und man bekommt für 12 Sekunden Speed";
+    }
+
+    @Override
     public int getID() {
         return 2;
     }

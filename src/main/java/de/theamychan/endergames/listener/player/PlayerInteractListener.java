@@ -113,7 +113,7 @@ public class PlayerInteractListener implements EventListener {
     public void onPlayerTrackTarget(PlayerInteractEvent e){
         EntityPlayer player = e.getPlayer();
         ItemStack item = player.getInventory().getItemInHand();
-        
+
         if ( item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ) {
             if ( getNearbyPlayer( player ) != null ) {
                 player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke" );

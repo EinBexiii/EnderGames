@@ -6,6 +6,8 @@ public interface Kit {
 
     String getName();
 
+    String getDescription();
+
     int getID();
 
     int getPrice();

@@ -27,6 +27,11 @@ public class KitArcher implements Kit, EventListener {
     }
 
     @Override
+    public String getDescription() {
+        return "Ausrüstung: 1x Bow 10 Pfeile \n Fähigkeit: Man bekommt nach jedem Kill 2 Pfeile dazu!";
+    }
+
+    @Override
     public int getID() {
         return 1;
     }
