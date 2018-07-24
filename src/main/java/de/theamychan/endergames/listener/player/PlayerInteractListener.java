@@ -8,6 +8,7 @@ import io.gomint.entity.potion.PotionEffect;
 import io.gomint.entity.projectile.EntityArrow;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
+import io.gomint.event.EventPriority;
 import io.gomint.event.player.PlayerInteractEvent;
 import io.gomint.gui.ButtonList;
 import io.gomint.inventory.item.*;
@@ -64,7 +65,7 @@ public class PlayerInteractListener implements EventListener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerOpenEnderchest( PlayerInteractEvent e ) {
         EntityPlayer player = e.getPlayer();
         Block block = e.getBlock();
@@ -74,8 +75,9 @@ public class PlayerInteractListener implements EventListener {
             if ( block instanceof BlockEnderChest ) {
                 BlockEnderChest chest = (BlockEnderChest) block;
                 if ( !locations.contains( chest.getLocation() ) ) {
-                    plugin.getChestManager().fillChest( chest );
+                    List<ItemStack> items = plugin.getChestManager().fillChest( chest );
                     locations.add( block.getLocation() );
+                    plugin.getItemsMap().put( block, items );
                 }
             }
         }

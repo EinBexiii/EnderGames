@@ -22,12 +22,14 @@ import de.theamychan.endergames.util.LocationAPI;
 import de.theamychan.schematic.SchematicSystem;
 import io.gomint.GoMint;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.inventory.item.ItemStack;
 import io.gomint.math.Location;
 import io.gomint.plugin.Depends;
 import io.gomint.plugin.Plugin;
 import io.gomint.plugin.PluginName;
 import io.gomint.plugin.Version;
 import io.gomint.world.World;
+import io.gomint.world.block.Block;
 import io.gomint.world.generator.CreateOptions;
 import io.gomint.world.generator.integrated.NormalGenerator;
 import lombok.Getter;
@@ -96,6 +98,8 @@ public class EnderGames extends Plugin {
 
     @Getter
     private Map<EntityPlayer, EntityPlayer> lastDamager = new HashMap<>();
+    @Getter
+    private Map<Block, List<ItemStack>> itemsMap = new HashMap<>();
 
     @Override
     public void onInstall() {

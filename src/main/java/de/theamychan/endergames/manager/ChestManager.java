@@ -6,10 +6,7 @@ import io.gomint.inventory.Inventory;
 import io.gomint.inventory.item.*;
 import io.gomint.world.block.BlockEnderChest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ChestManager {
 
@@ -19,11 +16,12 @@ public class ChestManager {
         this.plugin = plugin;
     }
 
-    public void fillChest( BlockEnderChest chest ) {
+    public List<ItemStack> fillChest( BlockEnderChest chest ) {
         Inventory inventory = chest.getInventory();
         inventory.clear();
 
         List<ItemStack> items = new ArrayList<>();
+        List<ItemStack> getItems = new ArrayList<>();
 
         int rn = plugin.randomInt( 4, 8 );
 
@@ -113,7 +111,10 @@ public class ChestManager {
         while (rn != 0) {
             rn--;
             ItemStack itemStack = items.get( new Random().nextInt( items.size() ) );
-            inventory.setItem( plugin.randomInt( 0, 26 ), itemStack );
+            int index = plugin.randomInt( 0, 26 );
+            inventory.setItem( index, itemStack );
+            getItems.add( itemStack );
         }
+        return getItems;
     }
 }

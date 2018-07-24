@@ -55,15 +55,14 @@ public class KitDieb implements Kit, EventListener {
 
         if(plugin.getKitManager().getKit( player ) == this){
             if ( block instanceof BlockEnderChest ) {
-                e.setCancelled( true );
                 BlockEnderChest enderChest = (BlockEnderChest) block;
-                for (ItemStack itemStack : enderChest.getInventory().getContents()) {
-                    if ( itemStack != null ) {
-                        player.getInventory().addItem( itemStack );
-                        enderChest.getInventory().clear();
-                    }
-                }
                 player.addEffect( PotionEffect.SPEED, 1, 16, TimeUnit.SECONDS );
+                e.setCancelled( true );
+                plugin.getScheduler().schedule( () -> {
+                    for(ItemStack itemStack : plugin.getItemsMap().get( enderChest )){
+                        player.getInventory().addItem( itemStack );
+                    }
+                }, 20, TimeUnit.MILLISECONDS );
             }
         }
 
