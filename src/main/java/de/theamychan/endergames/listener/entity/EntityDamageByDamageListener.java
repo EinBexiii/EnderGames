@@ -3,6 +3,7 @@ package de.theamychan.endergames.listener.entity;
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.entity.active.EntityPrimedTNT;
 import io.gomint.entity.projectile.EntityArrow;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
@@ -45,6 +46,10 @@ public class EntityDamageByDamageListener implements EventListener {
                 }
             }
 
+        }else if(e.getAttacker() instanceof EntityPrimedTNT){
+            if(GameState.getGameState().equals( GameState.PEACEFUL )){
+                e.setCancelled( true );
+            }
         }
     }
 

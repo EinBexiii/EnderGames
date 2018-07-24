@@ -25,10 +25,12 @@ public class BlockPlaceListener implements EventListener {
                 e.setCancelled( false );
             }
         }else{
-            if(!plugin.getIngame().contains( player )){
-                e.setCancelled( true );
-            }else{
+            if(plugin.getIngame().contains( player )){
                 e.setCancelled( false );
+                System.out.println(1 );
+            }else{
+                e.setCancelled( true );
+                System.out.println( 2 );
             }
         }
     }

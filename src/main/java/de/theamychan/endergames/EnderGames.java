@@ -9,6 +9,7 @@ import de.theamychan.endergames.gamestate.GameState;
 import de.theamychan.endergames.kit.manager.KitManager;
 import de.theamychan.endergames.listener.entity.EntityDamageByDamageListener;
 import de.theamychan.endergames.listener.entity.EntityDamageListener;
+import de.theamychan.endergames.listener.entity.EntityExplodeListener;
 import de.theamychan.endergames.listener.inventory.InventoryTransactionListener;
 import de.theamychan.endergames.listener.player.*;
 import de.theamychan.endergames.listener.projectile.ProjectileHitEntityListener;
@@ -129,6 +130,7 @@ public class EnderGames extends Plugin {
         //Entity
         this.registerListener( new EntityDamageListener( this ) );
         this.registerListener( new EntityDamageByDamageListener( this ) );
+        this.registerListener( new EntityExplodeListener() );
 
         //Player
         this.registerListener( new PlayerJoinListener( this ) );

@@ -20,6 +20,8 @@ public class KitManager {
     private KitSchinken kitSchinken;
     @Getter
     private KitSuppenmeister kitSuppenmeister;
+    @Getter
+    private KitBomber kitBomber;
 
     private Map<EntityPlayer, Kit> kit = new HashMap<>();
 
@@ -29,6 +31,7 @@ public class KitManager {
         this.kitDieb = new KitDieb( plugin );
         this.kitSchinken = new KitSchinken( plugin );
         this.kitSuppenmeister = new KitSuppenmeister( plugin );
+        this.kitBomber = new KitBomber( plugin );
     }
 
     public void setKit( EntityPlayer player, Kit kit){

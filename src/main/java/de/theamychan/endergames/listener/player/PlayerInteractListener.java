@@ -47,6 +47,8 @@ public class PlayerInteractListener implements EventListener {
                 buttonList.addButton( "kitDieb", "Dieb" );
                 buttonList.addButton( "kitSchinken", "Schinken" );
                 buttonList.addButton( "kitSuppenmeister", "Suppenmeister" );
+                buttonList.addButton( "kitBomber", "Bomber" );
+
                 player.showForm( buttonList ).onResponse( id -> {
                     if ( id.equals( "kitBabar" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
@@ -58,6 +60,8 @@ public class PlayerInteractListener implements EventListener {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSchinken() );
                     } else if ( id.equals( "kitSuppenmeister" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSuppenmeister() );
+                    } else if ( id.equals( "kitBomber" ) ) {
+                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBomber() );
                     }
                     player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                 } );
@@ -65,7 +69,7 @@ public class PlayerInteractListener implements EventListener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler( priority = EventPriority.HIGH )
     public void onPlayerOpenEnderchest( PlayerInteractEvent e ) {
         EntityPlayer player = e.getPlayer();
         Block block = e.getBlock();
@@ -90,13 +94,13 @@ public class PlayerInteractListener implements EventListener {
 
         if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
             if ( item instanceof ItemArrow ) {
-                if(item.getAmount() > 1){
+                if ( item.getAmount() > 1 ) {
                     EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
                     entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
                     entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
                     item.setAmount( item.getAmount() - 1 );
                     player.getInventory().setItem( player.getInventory().getItemInHandSlot(), item );
-                }else{
+                } else {
                     EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
                     entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
                     entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
