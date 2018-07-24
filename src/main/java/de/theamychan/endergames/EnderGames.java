@@ -47,6 +47,7 @@ public class EnderGames extends Plugin {
 
     @Getter
     private static EnderGames instance;
+
     @Getter
     private SchematicSystem schematicSystem;
     @Getter

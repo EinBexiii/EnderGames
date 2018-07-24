@@ -2,9 +2,7 @@ package de.theamychan.endergames.listener.player;
 
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.gamestate.GameState;
-import de.theamychan.endergames.kit.KitBabar;
 import io.gomint.GoMint;
-import io.gomint.entity.Entity;
 import io.gomint.entity.EntityPlayer;
 import io.gomint.entity.potion.PotionEffect;
 import io.gomint.entity.projectile.EntityArrow;
@@ -12,14 +10,8 @@ import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
 import io.gomint.event.player.PlayerInteractEvent;
 import io.gomint.gui.ButtonList;
-import io.gomint.gui.FormListener;
-import io.gomint.gui.FormResponse;
-import io.gomint.inventory.item.ItemArrow;
-import io.gomint.inventory.item.ItemChest;
-import io.gomint.inventory.item.ItemCompass;
-import io.gomint.inventory.item.ItemStack;
+import io.gomint.inventory.item.*;
 import io.gomint.math.Location;
-import io.gomint.math.Vector;
 import io.gomint.world.Gamemode;
 import io.gomint.world.block.Block;
 import io.gomint.world.block.BlockAir;
@@ -29,7 +21,6 @@ import io.gomint.world.block.BlockObsidian;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 public class PlayerInteractListener implements EventListener {
 
@@ -54,6 +45,7 @@ public class PlayerInteractListener implements EventListener {
                 buttonList.addButton( "kitArcher", "Archer" );
                 buttonList.addButton( "kitDieb", "Dieb" );
                 buttonList.addButton( "kitSchinken", "Schinken" );
+                buttonList.addButton( "kitSuppenmeister", "Suppenmeister" );
                 player.showForm( buttonList ).onResponse( id -> {
                     if ( id.equals( "kitBabar" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
@@ -63,6 +55,8 @@ public class PlayerInteractListener implements EventListener {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitDieb() );
                     } else if ( id.equals( "kitSchinken" ) ) {
                         plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSchinken() );
+                    } else if ( id.equals( "kitSuppenmeister" ) ) {
+                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSuppenmeister() );
                     }
                     player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                 } );
@@ -90,16 +84,22 @@ public class PlayerInteractListener implements EventListener {
     @EventHandler
     public void onPlayerShootArrow( PlayerInteractEvent e ) {
         EntityPlayer player = e.getPlayer();
-        ItemStack itemStack = player.getInventory().getItemInHand();
+        ItemStack item = player.getInventory().getItemInHand();
 
         if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
-            if ( itemStack instanceof ItemArrow ) {
-                EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
-                entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
-                entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
-                itemStack.setAmount( itemStack.getAmount() - 1 );
-
-                player.getInventory().setItem( player.getInventory().getItemInHandSlot(), itemStack);
+            if ( item instanceof ItemArrow ) {
+                if(item.getAmount() > 1){
+                    EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
+                    entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
+                    entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
+                    item.setAmount( item.getAmount() - 1 );
+                    player.getInventory().setItem( player.getInventory().getItemInHandSlot(), item );
+                }else{
+                    EntityArrow entityArrow = GoMint.instance().createEntity( EntityArrow.class );
+                    entityArrow.spawn( player.getLocation().add( 0, (float) 1.5, 0 ) );
+                    entityArrow.setVelocity( player.getDirection().multiply( 2 ) );
+                    player.getInventory().setItem( player.getInventory().getItemInHandSlot(), ItemAir.create( 1 ) );
+                }
             }
         }
     }
@@ -109,7 +109,7 @@ public class PlayerInteractListener implements EventListener {
         EntityPlayer player = e.getPlayer();
         Block block = e.getBlock();
 
-        if ( block instanceof BlockObsidian && plugin.getSpeedBlockTeleport().getBlocks().contains( block )) {
+        if ( block instanceof BlockObsidian && plugin.getSpeedBlockTeleport().getBlocks().contains( block ) ) {
             block.setType( BlockAir.class );
             player.addEffect( PotionEffect.SPEED, 1, 31, TimeUnit.SECONDS );
         }

@@ -25,27 +25,29 @@ public class PlayerTeleport {
     private Task task;
 
     public void startTeleport() {
-        task = plugin.getScheduler().schedule( () -> {
+        if(plugin.getTeleport().size() > 1){
+            task = plugin.getScheduler().schedule( () -> {
 
-            EntityPlayer player1 = plugin.getTeleport().get( new Random().nextInt( plugin.getTeleport().size() ) );
-            plugin.getTeleport().remove( player1 );
-            EntityPlayer player2 = plugin.getTeleport().get( new Random().nextInt( plugin.getTeleport().size() ) );
-            plugin.getTeleport().remove( player2 );
+                EntityPlayer player1 = plugin.getTeleport().get( new Random().nextInt( plugin.getTeleport().size() ) );
+                plugin.getTeleport().remove( player1 );
+                EntityPlayer player2 = plugin.getTeleport().get( new Random().nextInt( plugin.getTeleport().size() ) );
+                plugin.getTeleport().remove( player2 );
 
-            Location loc1 = player1.getLocation();
-            Location loc2 = player2.getLocation();
+                Location loc1 = player1.getLocation();
+                Location loc2 = player2.getLocation();
 
-            if ( player1 != player2 ) {
-                player1.teleport( loc2 );
-                player1.playSound( player1.getLocation(), Sound.TELEPORT, (byte) 1 );
-                plugin.getTeleport().add( player1 );
-                player2.teleport( loc1 );
-                player2.playSound( player2.getLocation(), Sound.TELEPORT, (byte) 1 );
-                plugin.getTeleport().add( player2 );
-            }
+                if ( player1 != player2 ) {
+                    player1.teleport( loc2 );
+                    player1.playSound( player1.getLocation(), Sound.TELEPORT, (byte) 1 );
+                    plugin.getTeleport().add( player1 );
+                    player2.teleport( loc1 );
+                    player2.playSound( player2.getLocation(), Sound.TELEPORT, (byte) 1 );
+                    plugin.getTeleport().add( player2 );
+                }
 
-            startTeleport();
-        }, GameState.getGameState() == GameState.WAIT ? 1 : plugin.randomInt( 45, 120 ), TimeUnit.SECONDS );
+                startTeleport();
+            }, GameState.getGameState() == GameState.WAIT ? 1 : plugin.randomInt( 45, 120 ), TimeUnit.SECONDS );
+        }
     }
 
     public void stop() {
