@@ -53,7 +53,7 @@ public class KitDieb implements Kit, EventListener {
         EntityPlayer player = e.getPlayer();
         Block block = e.getBlock();
 
-        if(plugin.getKitManager().getKit( player ) == this){
+        if(plugin.getKitManager().getKit( player ) instanceof KitDieb){
             if ( block instanceof BlockEnderChest ) {
                 BlockEnderChest enderChest = (BlockEnderChest) block;
                 player.addEffect( PotionEffect.SPEED, 1, 16, TimeUnit.SECONDS );

@@ -16,7 +16,7 @@ public class KitBabar implements Kit {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 1x Holzschwert Komplette Lederrüstung";
+        return "Ausrüstung: 1x Holzschwert und 1x Komplette Lederrüstung";
     }
 
     @Override

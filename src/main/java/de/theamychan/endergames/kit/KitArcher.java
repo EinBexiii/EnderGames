@@ -28,7 +28,7 @@ public class KitArcher implements Kit, EventListener {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 1x Bow 10 Pfeile \n Fähigkeit: Man bekommt nach jedem Kill 2 Pfeile dazu!";
+        return "Ausrüstung: 1x Bow, 10x Pfeile " + "\n" + "\n" + "Fähigkeit: Man bekommt nach jedem Kill 2 Pfeile dazu!";
     }
 
     @Override
@@ -55,8 +55,10 @@ public class KitArcher implements Kit, EventListener {
         EntityPlayer player = e.getPlayer();
         EntityPlayer killer = plugin.getLastDamager().get( player );
 
-        if(killer != null){
-            killer.getInventory().addItem( new ItemBuilder( ItemArrow.create( 2 ) ).build() );
+        if(plugin.getKitManager().getKit( player ) instanceof KitArcher ) {
+            if(killer != null){
+                killer.getInventory().addItem( new ItemBuilder( ItemArrow.create( 2 ) ).build() );
+            }
         }
 
     }

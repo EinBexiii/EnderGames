@@ -1,5 +1,6 @@
 package de.theamychan.endergames.util;
 
+import io.gomint.enchant.Enchantment;
 import io.gomint.inventory.item.ItemBucket;
 import io.gomint.inventory.item.ItemStack;
 
@@ -35,6 +36,11 @@ public class ItemBuilder {
         if(itemStack instanceof ItemBucket){
             ((ItemBucket) itemStack).setContent( content );
         }
+        return this;
+    }
+
+    public ItemBuilder addEnchantment( Class<? extends Enchantment> clazz, short value){
+        this.itemStack.addEnchantment( clazz, value );
         return this;
     }
 

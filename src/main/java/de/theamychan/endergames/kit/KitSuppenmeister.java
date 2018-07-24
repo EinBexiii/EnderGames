@@ -27,7 +27,7 @@ public class KitSuppenmeister implements Kit, EventListener {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 10x Suppen \n Fähigkeiten: Beim essen der Suppe bekommst du 2 Herzen dazu!";
+        return "Ausrüstung: 10x Suppen " + "\n" + "\n" + " Fähigkeiten: Beim essen der Suppe bekommst du 2 Herzen dazu!";
     }
 
     @Override
@@ -50,7 +50,7 @@ public class KitSuppenmeister implements Kit, EventListener {
         EntityPlayer player = e.getPlayer();
         ItemStack item = player.getInventory().getItemInHand();
 
-        if(plugin.getKitManager().getKit( player ) == this){
+        if(plugin.getKitManager().getKit( player ) instanceof KitSuppenmeister ){
             if(item instanceof ItemMushroomStew){
                 if(item.getAmount() > 1){
                     item.setAmount( item.getAmount() - 1 );

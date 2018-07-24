@@ -35,7 +35,7 @@ public class KitSchinken implements Kit, EventListener {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 1x Schinken \n Fähigkeit: Mehr Damage und für 6 Sekunden Speed und einen Regenerations Effect";
+        return "Ausrüstung: 1x Schinken " + "\n" + "\n" + " Fähigkeit: Mehr Damage und für 6 Sekunden Speed und einen Regenerations Effect";
     }
 
     @Override
@@ -58,7 +58,7 @@ public class KitSchinken implements Kit, EventListener {
         EntityPlayer player = e.getPlayer();
         ItemStack item = player.getInventory().getItemInHand();
 
-        if(plugin.getKitManager().getKit( player ) == this){
+        if(plugin.getKitManager().getKit( player ) instanceof KitSchinken ){
             if(item instanceof ItemRawPorkchop && item.getCustomName().equalsIgnoreCase( "§cSchinken" )){
                 if(player.getHunger() < 20){
                     player.setHunger( 20 );

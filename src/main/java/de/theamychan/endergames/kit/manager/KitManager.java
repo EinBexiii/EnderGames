@@ -10,6 +10,8 @@ import java.util.Map;
 
 public class KitManager {
 
+    private EnderGames plugin;
+
     @Getter
     private KitBabar kitBabar;
     @Getter
@@ -26,6 +28,7 @@ public class KitManager {
     private Map<EntityPlayer, Kit> kit = new HashMap<>();
 
     public KitManager( EnderGames plugin  ) {
+        this.plugin = plugin;
         this.kitBabar = new KitBabar();
         this.kitArcher = new KitArcher( plugin );
         this.kitDieb = new KitDieb( plugin );
@@ -36,6 +39,7 @@ public class KitManager {
 
     public void setKit( EntityPlayer player, Kit kit){
         this.kit.put( player, kit );
+        player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + getKit( player ).getName() + " §7ausgewählt" );
     }
 
     public Kit getKit(EntityPlayer player){

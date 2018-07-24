@@ -11,6 +11,7 @@ import io.gomint.event.EventListener;
 import io.gomint.event.EventPriority;
 import io.gomint.event.player.PlayerInteractEvent;
 import io.gomint.gui.ButtonList;
+import io.gomint.gui.Modal;
 import io.gomint.inventory.item.*;
 import io.gomint.math.Location;
 import io.gomint.world.Gamemode;
@@ -51,19 +52,66 @@ public class PlayerInteractListener implements EventListener {
 
                 player.showForm( buttonList ).onResponse( id -> {
                     if ( id.equals( "kitBabar" ) ) {
-                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
+                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitBabar().getDescription());
+                        modal.setTrueButtonText( "Auswählen" );
+                        modal.setFalseButtonText( "Abbrechen" );
+                        player.showForm( modal ).onResponse( bool ->{
+                            Boolean success = Boolean.valueOf( String.valueOf( bool ) );
+                            if(success){
+                                plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
+                            }
+                        } );
                     } else if ( id.equals( "kitArcher" ) ) {
-                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitArcher() );
+                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitArcher().getDescription());
+                        modal.setTrueButtonText( "Auswählen" );
+                        modal.setFalseButtonText( "Abbrechen" );
+                        player.showForm( modal ).onResponse( bool ->{
+                            Boolean success = Boolean.valueOf( String.valueOf( bool ) );
+                            if(success){
+                                plugin.getKitManager().setKit( player, plugin.getKitManager().getKitArcher() );
+                            }
+                        } );
                     } else if ( id.equals( "kitDieb" ) ) {
-                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitDieb() );
+                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitDieb().getDescription());
+                        modal.setTrueButtonText( "Auswählen" );
+                        modal.setFalseButtonText( "Abbrechen" );
+                        player.showForm( modal ).onResponse( bool ->{
+                            Boolean success = Boolean.valueOf( String.valueOf( bool ) );
+                            if(success){
+                                plugin.getKitManager().setKit( player, plugin.getKitManager().getKitDieb() );
+                            }
+                        } );
                     } else if ( id.equals( "kitSchinken" ) ) {
-                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSchinken() );
+                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitSchinken().getDescription());
+                        modal.setTrueButtonText( "Auswählen" );
+                        modal.setFalseButtonText( "Abbrechen" );
+                        player.showForm( modal ).onResponse( bool ->{
+                            Boolean success = Boolean.valueOf( String.valueOf( bool ) );
+                            if(success){
+                                plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSchinken() );
+                            }
+                        } );
                     } else if ( id.equals( "kitSuppenmeister" ) ) {
-                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSuppenmeister() );
+                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitSuppenmeister().getDescription());
+                        modal.setTrueButtonText( "Auswählen" );
+                        modal.setFalseButtonText( "Abbrechen" );
+                        player.showForm( modal ).onResponse( bool ->{
+                            Boolean success = Boolean.valueOf( String.valueOf( bool ) );
+                            if(success){
+                                plugin.getKitManager().setKit( player, plugin.getKitManager().getKitSuppenmeister() );
+                            }
+                        } );
                     } else if ( id.equals( "kitBomber" ) ) {
-                        plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBomber() );
+                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitBomber().getDescription());
+                        modal.setTrueButtonText( "Auswählen" );
+                        modal.setFalseButtonText( "Abbrechen" );
+                        player.showForm( modal ).onResponse( bool ->{
+                            Boolean success = Boolean.valueOf( String.valueOf( bool ) );
+                            if(success){
+                                plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBomber() );
+                            }
+                        } );
                     }
-                    player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
                 } );
             }
         }

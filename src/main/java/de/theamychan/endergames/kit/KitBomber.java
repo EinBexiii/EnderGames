@@ -15,9 +15,6 @@ import io.gomint.inventory.item.ItemAir;
 import io.gomint.inventory.item.ItemStack;
 import io.gomint.inventory.item.ItemTNT;
 import io.gomint.math.Location;
-import io.gomint.world.block.Block;
-import io.gomint.world.block.BlockAir;
-import io.gomint.world.block.BlockTNT;
 
 public class KitBomber implements Kit, EventListener {
 
@@ -35,7 +32,7 @@ public class KitBomber implements Kit, EventListener {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 5x TNT \n Fähigkeit: Du bekommst durch Explosionen keinen Schaden und beim Töten hinterlässt du eine TNT Explosion.";
+        return "Ausrüstung: 5x TNT " + "\n" + "\n" + " Fähigkeit: Du bekommst durch Explosionen keinen Schaden und beim Töten hinterlässt du eine TNT Explosion.";
     }
 
     @Override
@@ -60,7 +57,7 @@ public class KitBomber implements Kit, EventListener {
         if ( e.getEntity() instanceof EntityPlayer ) {
             EntityPlayer player = (EntityPlayer) e.getEntity();
 
-            if ( plugin.getKitManager().getKit( player ) == this ) {
+            if ( plugin.getKitManager().getKit( player ) instanceof KitBomber) {
                 if(e.getDamageSource().equals( EntityDamageEvent.DamageSource.ENTITY_EXPLODE )){
                     e.setCancelled( true );
                 }
@@ -75,7 +72,7 @@ public class KitBomber implements Kit, EventListener {
         if ( e.getEntity() instanceof EntityPlayer ) {
             EntityPlayer player = (EntityPlayer) e.getEntity();
 
-            if ( plugin.getKitManager().getKit( player ) == this ) {
+            if ( plugin.getKitManager().getKit( player ) instanceof KitBomber) {
                 if(e.getDamageSource().equals( EntityDamageEvent.DamageSource.ENTITY_EXPLODE )){
                     e.setCancelled( true );
                 }
@@ -89,7 +86,7 @@ public class KitBomber implements Kit, EventListener {
         EntityPlayer player = e.getPlayer();
         EntityPlayer killer = plugin.getLastDamager().get( player );
 
-        if(plugin.getKitManager().getKit( killer ) == this){
+        if ( plugin.getKitManager().getKit( player ) instanceof KitBomber) {
             if(killer != null){
                 EntityPrimedTNT primedTNT = EntityPrimedTNT.create();
                 primedTNT.setFuse( 0 );
@@ -103,7 +100,7 @@ public class KitBomber implements Kit, EventListener {
         EntityPlayer player = e.getPlayer();
         ItemStack item = e.getItem();
 
-        if(plugin.getKitManager().getKit( player ) == this){
+        if ( plugin.getKitManager().getKit( player ) instanceof KitBomber) {
             if ( item instanceof ItemTNT ) {
                 // TNT automatic explode
                 e.setCancelled( true );
