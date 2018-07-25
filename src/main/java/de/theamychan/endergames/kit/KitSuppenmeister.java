@@ -27,7 +27,7 @@ public class KitSuppenmeister implements Kit, EventListener {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 10x Suppen " + "\n" + "\n" + " Fähigkeiten: Beim essen der Suppe bekommst du 2 Herzen dazu!";
+        return "Ausrüstung: 10x Suppen " + "\n" + "\n" + "Fähigkeiten: Beim essen der Suppe bekommst du 2 Herzen dazu!";
     }
 
     @Override

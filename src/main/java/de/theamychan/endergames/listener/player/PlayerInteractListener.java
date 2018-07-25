@@ -11,6 +11,7 @@ import io.gomint.event.EventListener;
 import io.gomint.event.EventPriority;
 import io.gomint.event.player.PlayerInteractEvent;
 import io.gomint.gui.ButtonList;
+import io.gomint.gui.FormListener;
 import io.gomint.gui.Modal;
 import io.gomint.inventory.item.*;
 import io.gomint.math.Location;
@@ -181,6 +182,29 @@ public class PlayerInteractListener implements EventListener {
                 player.sendMessage( plugin.getPrefix() + "§cEs konnte kein Spieler getrackt werden!" );
             }
         }
+    }
+
+    @EventHandler
+    public void onPlayerInteractWithTeleporter(PlayerInteractEvent e){
+        EntityPlayer player = e.getPlayer();
+        ItemStack item = player.getInventory().getItemInHand();
+
+        if(item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§6Teleporter" )){
+            if(plugin.getSpectator().contains( player )){
+                ButtonList buttonList = ButtonList.create( "§6Teleporter" );
+                for(EntityPlayer ingamePlayers : plugin.getIngame()){
+                    if( !player.getName().equals( ingamePlayers.getName() ) ){
+                        buttonList.addButton( ingamePlayers.getName(), ingamePlayers.getNameTag() );
+                    }
+                }
+                FormListener<String> formListener = player.showForm( buttonList );
+                formListener.onResponse( button -> {
+                    EntityPlayer target = GoMint.instance().findPlayerByName( button );
+                    player.teleport( target.getLocation() );
+                } );
+            }
+        }
+
     }
 
     private EntityPlayer getNearbyPlayer( EntityPlayer target ) {

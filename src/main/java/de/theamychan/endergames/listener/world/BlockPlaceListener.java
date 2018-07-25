@@ -21,16 +21,10 @@ public class BlockPlaceListener implements EventListener {
         if(GameState.getGameState().equals( GameState.LOBBY ) || GameState.getGameState().equals( GameState.WAIT ) || GameState.getGameState().equals( GameState.RESTART ) ) {
             if(!player.getGamemode().equals( Gamemode.CREATIVE )) {
                 e.setCancelled( true );
-            }else{
-                e.setCancelled( false );
             }
         }else{
-            if(plugin.getIngame().contains( player )){
-                e.setCancelled( false );
-                System.out.println(1 );
-            }else{
+            if(plugin.getSpectator().contains( player )){
                 e.setCancelled( true );
-                System.out.println( 2 );
             }
         }
     }

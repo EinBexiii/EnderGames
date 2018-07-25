@@ -35,7 +35,7 @@ public class KitSchinken implements Kit, EventListener {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 1x Schinken " + "\n" + "\n" + " Fähigkeit: Mehr Damage und für 6 Sekunden Speed und einen Regenerations Effect";
+        return "Ausrüstung: 1x Schinken " + "\n" + "\n" + "Fähigkeit: Mehr Damage und für 6 Sekunden Speed und einen Regenerations Effect";
     }
 
     @Override

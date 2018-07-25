@@ -7,6 +7,7 @@ import io.gomint.entity.EntityPlayer;
 import io.gomint.entity.active.EntityPrimedTNT;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
+import io.gomint.event.EventPriority;
 import io.gomint.event.entity.EntityDamageByEntityEvent;
 import io.gomint.event.entity.EntityDamageEvent;
 import io.gomint.event.player.PlayerDeathEvent;
@@ -32,7 +33,7 @@ public class KitBomber implements Kit, EventListener {
 
     @Override
     public String getDescription() {
-        return "Ausrüstung: 5x TNT " + "\n" + "\n" + " Fähigkeit: Du bekommst durch Explosionen keinen Schaden und beim Töten hinterlässt du eine TNT Explosion.";
+        return "Ausrüstung: 5x TNT " + "\n" + "\n" + "Fähigkeit: Du bekommst durch Explosionen keinen Schaden und beim Töten hinterlässt du eine TNT Explosion.";
     }
 
     @Override

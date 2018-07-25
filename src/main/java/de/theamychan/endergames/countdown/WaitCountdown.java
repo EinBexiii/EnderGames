@@ -69,6 +69,7 @@ public class WaitCountdown {
                         plugin.getWorldBorder().start();
                         plugin.getChestTeleportManager().start();
                         plugin.getSpeedBlockTeleport().start();
+
                         break;
                         default:
                             break;
