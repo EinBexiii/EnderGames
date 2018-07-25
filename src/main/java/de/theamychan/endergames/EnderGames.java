@@ -19,6 +19,8 @@ import de.theamychan.endergames.manager.ChestManager;
 import de.theamychan.endergames.manager.ChestTeleport;
 import de.theamychan.endergames.manager.PlayerTeleport;
 import de.theamychan.endergames.manager.SpeedBlockTeleport;
+import de.theamychan.endergames.mysql.MySQL;
+import de.theamychan.endergames.mysql.Stats;
 import de.theamychan.endergames.util.LocationAPI;
 import de.theamychan.schematic.SchematicSystem;
 import io.gomint.GoMint;
@@ -67,6 +69,10 @@ public class EnderGames extends Plugin {
     private KitManager kitManager;
     @Getter
     private PlayerTeleport playerTeleport;
+    @Getter
+    private MySQL mySQL;
+    @Getter
+    private Stats stats;
 
     @Getter
     private LobbyCountdown lobbyCountdown;
@@ -116,6 +122,9 @@ public class EnderGames extends Plugin {
         this.speedBlockTeleport = new SpeedBlockTeleport( this );
         this.kitManager = new KitManager( this );
         this.playerTeleport = new PlayerTeleport( this );
+        this.mySQL = new MySQL( this );
+        this.mySQL.createTables();
+        this.stats = new Stats( this );
 
         //Countdown
         this.lobbyCountdown = new LobbyCountdown( this );
