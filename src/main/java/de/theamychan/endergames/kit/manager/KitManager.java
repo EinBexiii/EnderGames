@@ -46,4 +46,14 @@ public class KitManager {
         return this.kit.get( player );
     }
 
+    public boolean haveKit(EntityPlayer player, Kit kit){
+        for(String ids : plugin.getStats().getKits( player )){
+            Integer kitID = Integer.parseInt( ids );
+            if(kitID == kit.getID()){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

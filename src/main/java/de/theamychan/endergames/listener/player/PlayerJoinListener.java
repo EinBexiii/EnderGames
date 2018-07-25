@@ -5,6 +5,7 @@ import de.theamychan.endergames.gamestate.GameState;
 import de.theamychan.endergames.util.ItemBuilder;
 import io.gomint.GoMint;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.entity.potion.PotionEffect;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
 import io.gomint.event.player.PlayerJoinEvent;
@@ -60,6 +61,7 @@ public class PlayerJoinListener implements EventListener {
 
                 player.teleport( plugin.getLocationAPI().getLocation( "Lobby", true ) );
                 player.getInventory().setItem( 0, new ItemBuilder( ItemCompass.create( 1 ) ).setCustomName( "§6Teleporter" ).build() );
+                player.addEffect( PotionEffect.INVISIBILITY, 0, 9999, TimeUnit.SECONDS ).setVisible( false );
 
                 plugin.getScheduler().schedule( () -> {
                     for (EntityPlayer ingamePlayers : plugin.getIngame()) {
@@ -75,6 +77,7 @@ public class PlayerJoinListener implements EventListener {
 
             player.teleport( plugin.getLocationAPI().getLocation( "Spectator", true ) );
             player.getInventory().setItem( 0, new ItemBuilder( ItemCompass.create( 1 ) ).setCustomName( "§6Teleporter" ).build() );
+            player.addEffect( PotionEffect.INVISIBILITY, 0, 9999, TimeUnit.SECONDS ).setVisible( false );
 
             plugin.getScheduler().schedule( () -> {
                 for (EntityPlayer ingamePlayers : plugin.getIngame()) {

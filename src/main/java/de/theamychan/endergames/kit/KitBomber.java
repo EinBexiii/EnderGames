@@ -16,6 +16,10 @@ import io.gomint.inventory.item.ItemAir;
 import io.gomint.inventory.item.ItemStack;
 import io.gomint.inventory.item.ItemTNT;
 import io.gomint.math.Location;
+import io.gomint.world.block.BlockFlowingLava;
+import io.gomint.world.block.BlockFlowingWater;
+import io.gomint.world.block.BlockStationaryLava;
+import io.gomint.world.block.BlockStationaryWater;
 
 public class KitBomber implements Kit, EventListener {
 
@@ -107,6 +111,13 @@ public class KitBomber implements Kit, EventListener {
                 e.setCancelled( true );
 
                 Location location = e.getShouldReplace().getLocation();
+
+                if(location.getBlock() instanceof BlockFlowingWater || location.getBlock() instanceof BlockStationaryWater
+                        || location.getBlock() instanceof BlockFlowingLava || location.getBlock() instanceof BlockStationaryLava ){
+                    e.setCancelled( true );
+                    return;
+                }
+
                 location = location.add( 0.5f, 0.5f, 0.5f );
 
                 EntityPrimedTNT tnt = EntityPrimedTNT.create();

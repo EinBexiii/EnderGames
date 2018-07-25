@@ -69,6 +69,7 @@ public class EnderGames extends Plugin {
     private KitManager kitManager;
     @Getter
     private PlayerTeleport playerTeleport;
+
     @Getter
     private MySQL mySQL;
     @Getter
@@ -122,9 +123,12 @@ public class EnderGames extends Plugin {
         this.speedBlockTeleport = new SpeedBlockTeleport( this );
         this.kitManager = new KitManager( this );
         this.playerTeleport = new PlayerTeleport( this );
+
+        /*
+        //MySQL
         this.mySQL = new MySQL( this );
         this.mySQL.createTables();
-        this.stats = new Stats( this );
+        this.stats = new Stats( this ); */
 
         //Countdown
         this.lobbyCountdown = new LobbyCountdown( this );

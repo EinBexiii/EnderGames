@@ -126,11 +126,15 @@ public class PlayerInteractListener implements EventListener {
 
         if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
             if ( block instanceof BlockEnderChest ) {
-                BlockEnderChest chest = (BlockEnderChest) block;
-                if ( !locations.contains( chest.getLocation() ) ) {
-                    List<ItemStack> items = plugin.getChestManager().fillChest( chest );
-                    locations.add( block.getLocation() );
-                    plugin.getItemsMap().put( block, items );
+                if(plugin.getIngame().contains( player )){
+                    BlockEnderChest chest = (BlockEnderChest) block;
+                    if ( !locations.contains( chest.getLocation() ) ) {
+                        List<ItemStack> items = plugin.getChestManager().fillChest( chest );
+                        locations.add( block.getLocation() );
+                        plugin.getItemsMap().put( block, items );
+                    }
+                }else{
+                    e.setCancelled( true );
                 }
             }
         }

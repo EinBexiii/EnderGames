@@ -3,6 +3,7 @@ package de.theamychan.endergames.listener.player;
 import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.util.ItemBuilder;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.entity.potion.PotionEffect;
 import io.gomint.event.EventHandler;
 import io.gomint.event.EventListener;
 import io.gomint.event.player.PlayerRespawnEvent;
@@ -31,6 +32,7 @@ public class PlayerRespawnListener implements EventListener {
 
             player.teleport( e.getRespawnLocation() );
             player.getInventory().setItem( 0, new ItemBuilder( ItemCompass.create( 1 ) ).setCustomName( "§6Teleporter" ).build() );
+            player.addEffect( PotionEffect.INVISIBILITY, 0, 9999, TimeUnit.SECONDS ).setVisible( false );
 
             plugin.getScheduler().schedule( () -> {
                 for (EntityPlayer ingamePlayers : plugin.getIngame()) {
