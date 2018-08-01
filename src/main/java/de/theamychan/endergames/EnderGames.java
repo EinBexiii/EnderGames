@@ -127,7 +127,7 @@ public class EnderGames extends Plugin {
         this.maxPlayers = this.config.getMaxPlayers();
 
         File de_DE = new File( this.getDataFolder().getAbsolutePath() + "/language", "de_DE.properties" );
-        File en_EN = new File( this.getDataFolder().getAbsolutePath() + "/language", "en_EN.properties" );
+        File en_EN = new File( this.getDataFolder().getAbsolutePath() + "/language", "en_US.properties" );
 
         if ( !de_DE.exists() ) {
             try {
@@ -138,7 +138,7 @@ public class EnderGames extends Plugin {
         }
         if ( !en_EN.exists() ) {
             try {
-                FileUtils.copyInputStreamToFile( getResourceAsStream( "en_EN.properties" ), en_EN );
+                FileUtils.copyInputStreamToFile( getResourceAsStream( "en_US.properties" ), en_EN );
             } catch ( IOException e ) {
                 e.printStackTrace();
             }
