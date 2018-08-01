@@ -27,8 +27,8 @@ public class KitArcher implements Kit, EventListener {
     }
 
     @Override
-    public String getDescription() {
-        return "Ausrüstung: 1x Bow, 10x Pfeile " + "\n" + "\n" + "Fähigkeit: Man bekommt nach jedem Kill 2 Pfeile dazu!";
+    public String getDescription( EntityPlayer player ) {
+        return plugin.getLocaleManager().translate( player.getLocale(), "kit-archer-equipment" ) + "\n" + "\n" + plugin.getLocaleManager().translate( player.getLocale(), "kit-archer-ability" );
     }
 
     @Override

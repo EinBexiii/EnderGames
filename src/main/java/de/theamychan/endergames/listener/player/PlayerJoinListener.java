@@ -27,7 +27,7 @@ public class PlayerJoinListener implements EventListener {
 
         if ( GameState.getGameState().equals( GameState.LOBBY ) ) {
             if(plugin.getIngame().size() <= plugin.getMaxPlayers()){
-                GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§r" + player.getNameTag() + " §7hat das Spiel betreten" ) );
+                GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "player-join", player.getNameTag() ) ) );
 
                 player.setHealth( 20 );
                 player.setHunger( 20 );

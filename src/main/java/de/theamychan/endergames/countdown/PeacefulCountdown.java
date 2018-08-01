@@ -6,6 +6,7 @@ import io.gomint.GoMint;
 import io.gomint.math.Location;
 import io.gomint.scheduler.Task;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class PeacefulCountdown {
@@ -29,28 +30,27 @@ public class PeacefulCountdown {
                 switch ( time ) {
 
                     case 60: case 45: case 30: case 15: case 10:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Die Schutzzeit endet in §e" + time + " §7Sekunden" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-peacefull-seconds", time ) ) );
                         break;
                     case 5:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Die Schutzzeit endet in §e" + time + " §7Sekunden" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-peacefull-seconds", time ) ) );
                         this.plugin.getSchematicSystem().getSchematicManager().destroy( this.plugin.getWorld().getSpawnLocation().add( 0, 50 , 0 ),"EnderGames", success -> {
                             if(success){
-                                this.plugin.getLogger().info( "Das Schematic wurde entfernt!" );
+                                this.plugin.getLogger().info( plugin.getLocaleManager().translate( Locale.GERMANY, "schematic-destroy-success" ) );
                             }else{
-                                this.plugin.getLogger().info( "Das Schematic konnte nicht entfernt werden!" );
+                                this.plugin.getLogger().info( plugin.getLocaleManager().translate( Locale.GERMANY, "schematic-destroy-fail" ) );
                             }
                         } );
                         break;
                     case 4: case 3: case 2:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Die Schutzzeit endet in §e" + time + " §7Sekunden" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-peacefull-seconds", time ) ) );
                         break;
                     case 1:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Die Schutzzeit endet in §e" + time + " §7Sekunde" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-peacefull-second", time ) ) );
                         break;
-
                     case 0:
                         stop();
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§eDie Schutzzeit ist vorbei!" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-peaceful-end" ) ) );
                         GameState.setGameState( GameState.INGAME );
                         break;
                         default:

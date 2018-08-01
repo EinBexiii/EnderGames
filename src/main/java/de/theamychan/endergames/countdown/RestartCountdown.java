@@ -28,13 +28,15 @@ public class RestartCountdown {
                 switch ( time ) {
 
                     case 15: case 10: case 5: case 4: case 3: case 2:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§cDer Server startet in §e" + time + " §cSekunden neu" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-restart-seconds", time ) ) );
                         break;
-
                     case 1:
-                        GoMint.instance().getPlayers().forEach( all -> all.disconnect( "§cServer restart!" ) );
+                        if(plugin.getConfig().isTransferAfterMatch()){
+                            GoMint.instance().getPlayers().forEach( all -> all.transfer( plugin.getConfig().getAddress(), plugin.getConfig().getPort() ) );
+                        }else{
+                            GoMint.instance().getPlayers().forEach( all -> all.disconnect( plugin.getLocaleManager().translate( all.getLocale(), "countdown-restart-kick" ) ) );
+                        }
                         break;
-
                     case 0:
                         stop();
                         plugin.getServer().shutdown();

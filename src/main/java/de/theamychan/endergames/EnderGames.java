@@ -1,6 +1,7 @@
 package de.theamychan.endergames;
 
 import de.theamychan.endergames.border.WorldBorder;
+import de.theamychan.endergames.config.Config;
 import de.theamychan.endergames.countdown.LobbyCountdown;
 import de.theamychan.endergames.countdown.PeacefulCountdown;
 import de.theamychan.endergames.countdown.RestartCountdown;
@@ -24,7 +25,9 @@ import de.theamychan.endergames.mysql.Stats;
 import de.theamychan.endergames.util.LocationAPI;
 import de.theamychan.schematic.SchematicSystem;
 import io.gomint.GoMint;
+import io.gomint.config.InvalidConfigurationException;
 import io.gomint.entity.EntityPlayer;
+import io.gomint.i18n.LocaleManager;
 import io.gomint.inventory.item.ItemStack;
 import io.gomint.math.Location;
 import io.gomint.plugin.Depends;
@@ -40,10 +43,7 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Depends( "SchematicSystem" )
 @PluginName( "EnderGames" )
@@ -52,6 +52,10 @@ public class EnderGames extends Plugin {
 
     @Getter
     private static EnderGames instance;
+    @Getter
+    private Config config;
+    @Getter
+    private LocaleManager localeManager;
 
     @Getter
     private SchematicSystem schematicSystem;
@@ -69,7 +73,6 @@ public class EnderGames extends Plugin {
     private KitManager kitManager;
     @Getter
     private PlayerTeleport playerTeleport;
-
     @Getter
     private MySQL mySQL;
     @Getter
@@ -91,11 +94,11 @@ public class EnderGames extends Plugin {
     private String prefix = "§f[§5EnderGames§f] ";
 
     @Getter
-    private int minPlayers = 2;
+    private int minPlayers;
     @Getter
-    private int maxPlayers = 24;
+    private int maxPlayers;
     @Getter
-    private int radius = 350;
+    private int radius;
 
     @Getter
     private List<EntityPlayer> ingame = new ArrayList<>();
@@ -112,7 +115,39 @@ public class EnderGames extends Plugin {
     @Override
     public void onInstall() {
         instance = this;
-        schematicSystem = SchematicSystem.getInstance();
+
+        this.config = new Config();
+        try {
+            this.config.init( new File( this.getDataFolder(), "config.yml" ) );
+        } catch ( InvalidConfigurationException e ) {
+            e.printStackTrace();
+        }
+
+        this.minPlayers = this.config.getMinPlayers();
+        this.maxPlayers = this.config.getMaxPlayers();
+
+        File de_DE = new File( this.getDataFolder().getAbsolutePath() + "/language", "de_DE.properties" );
+        File en_EN = new File( this.getDataFolder().getAbsolutePath() + "/language", "en_EN.properties" );
+
+        if ( !de_DE.exists() ) {
+            try {
+                FileUtils.copyInputStreamToFile( getResourceAsStream( "de_DE.properties" ), de_DE );
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+        }
+        if ( !en_EN.exists() ) {
+            try {
+                FileUtils.copyInputStreamToFile( getResourceAsStream( "en_EN.properties" ), en_EN );
+            } catch ( IOException e ) {
+                e.printStackTrace();
+            }
+        }
+
+        this.localeManager = new LocaleManager( this );
+        this.localeManager.setDefaultLocale( Locale.forLanguageTag( this.config.getDefaultLocale() ) );
+        this.localeManager.initFromLocaleFolder( new File( this.getDataFolder().getAbsolutePath() + "/language" ) );
+        this.schematicSystem = SchematicSystem.getInstance();
 
         GameState.setGameState( GameState.LOBBY );
 
@@ -163,22 +198,22 @@ public class EnderGames extends Plugin {
 
         try {
             if ( new File( "Arena" ).exists() ) {
-                this.getLogger().info( "EnderGames Arena wird gelöscht..." );
-                FileUtils.deleteDirectory( new File( "Arena" ) );
-                this.getLogger().info( "EnderGames Arena wurde gelöscht!" );
+                this.getLogger().info( this.localeManager.translate( Locale.getDefault(), "arena-delete" ) );
+                FileUtils.deleteDirectory( new File( this.config.getArenaName() ) );
+                this.getLogger().info( this.localeManager.translate( Locale.getDefault(), "arena-delete-success" ) );
             }
         } catch ( IOException e ) {
             e.printStackTrace();
         }
 
         if ( !new File( "Arena" ).exists() ) {
-            this.getLogger().info( "EnderGames Arena wird erstellt..." );
-            this.world = GoMint.instance().createWorld( "Arena", new CreateOptions().generator( NormalGenerator.class ) );
-            this.getLogger().info( "EnderGames Arena wurde erstellt!" );
+            this.getLogger().info( this.localeManager.translate( Locale.getDefault(), "arena-create" ) );
+            this.world = GoMint.instance().createWorld( this.config.getArenaName(), new CreateOptions().generator( NormalGenerator.class ) );
+            this.getLogger().info( this.localeManager.translate( Locale.getDefault(), "arena-create-success" ) );
             Location location = this.world.getSpawnLocation().add( 0, 50, 0 );
             this.schematicSystem.getSchematicManager().paste( location, "EnderGames", success -> {
                 if ( success ) {
-                    this.getLogger().info( "Schematic wurde erfolgreich plaziert!" );
+                    this.getLogger().info( this.localeManager.translate( Locale.getDefault(), "schematic-paste-success" ) );
                 }
             } );
         }

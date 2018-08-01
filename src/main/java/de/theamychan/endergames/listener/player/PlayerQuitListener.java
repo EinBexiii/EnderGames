@@ -19,7 +19,7 @@ public class PlayerQuitListener implements EventListener {
         EntityPlayer player = e.getPlayer();
 
         if(GameState.getGameState().equals( GameState.LOBBY ) ){
-            GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§r" + player.getNameTag() + " §7hat das Spiel verlassen" ) );
+            GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "player-quit", player.getNameTag()) ) );
             if(plugin.getIngame().contains( player )) plugin.getIngame().remove( player );
             if(plugin.getSpectator().contains( player )) plugin.getSpectator().remove( player );
             if(plugin.getTeleport().contains( player )) plugin.getTeleport().remove( player );
@@ -31,15 +31,15 @@ public class PlayerQuitListener implements EventListener {
             }
 
         }else{
-            GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§r" + player.getNameTag() + " §7ist gestorben" ) );
+            GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "player-death-message", player.getNameTag() ) ) );
             if(plugin.getIngame().contains( player )) plugin.getIngame().remove( player );
             if(plugin.getSpectator().contains( player )) plugin.getSpectator().remove( player );
 
             if(plugin.getIngame().size() == 1){
                 EntityPlayer winner = plugin.getIngame().get( 0 );
                 for(EntityPlayer all : GoMint.instance().getPlayers()){
-                    all.sendTitle( winner.getNameTag(), "§6hat Gewonnen!" );
-                    all.sendMessage( "§r" + winner.getNameTag() + " §6hat die EnderGames gewonnen!" );
+                    all.sendTitle( plugin.getLocaleManager().translate( all.getLocale(), "player-winner-title", winner.getNameTag() ) );
+                    all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "player-winner-message", winner.getNameTag() ) );
                 }
 
                 GameState.setGameState( GameState.RESTART );

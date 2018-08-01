@@ -6,7 +6,7 @@ public interface Kit {
 
     String getName();
 
-    String getDescription();
+    String getDescription( EntityPlayer player );
 
     int getID();
 

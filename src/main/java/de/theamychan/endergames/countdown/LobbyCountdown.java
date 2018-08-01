@@ -35,16 +35,16 @@ public class LobbyCountdown {
                 GoMint.instance().getPlayers().forEach( all -> all.setLevel( time ) );
                 switch ( time ) {
                     case 60: case 50: case 40: case 30: case 20: case 10: case 5: case 4: case 3: case 2:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Die Runde startet in §e" + time + " §7Sekunden" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-lobby-seconds", time ) ) );
                         break;
                     case 1:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Die Runde startet in §e" + time + " §7Sekunde" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-lobby-second", time ) ) );
                         break;
                     case 0:
                         stop();
                         int id = 0;
                         for(EntityPlayer player : GoMint.instance().getPlayers()){
-                            player.sendMessage( plugin.getPrefix() + "§eAlle Spieler werden in die Arena teleportiert..." );
+                            player.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "countdown-lobby-teleport" ) );
                             id++;
                             player.teleport( plugin.getLocationAPI().getLocation( "Spawn." + id, true ) );
                             player.getInventory().clear();

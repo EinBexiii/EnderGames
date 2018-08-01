@@ -39,7 +39,7 @@ public class KitManager {
 
     public void setKit( EntityPlayer player, Kit kit){
         this.kit.put( player, kit );
-        player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + getKit( player ).getName() + " §7ausgewählt" );
+        player.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "kit-selected", getKit( player ).getName() ) );
     }
 
     public Kit getKit(EntityPlayer player){

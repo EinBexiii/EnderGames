@@ -39,11 +39,11 @@ public class PlayerTeleport {
                 if ( player1 != player2 ) {
                     player1.teleport( loc2 );
                     player1.playSound( player1.getLocation(), Sound.TELEPORT, (byte) 1 );
-                    player1.sendMessage( plugin.getPrefix() + "§7Du wurdest mit §r" + player2.getNameTag() + " §7getauscht" );
+                    if(!GameState.getGameState().equals( GameState.WAIT )) player1.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player1.getLocale(),"player-swap-message", player2.getNameTag() ) );
                     plugin.getTeleport().add( player1 );
                     player2.teleport( loc1 );
                     player2.playSound( player2.getLocation(), Sound.TELEPORT, (byte) 1 );
-                    player2.sendMessage( plugin.getPrefix() + "§7Du wurdest mit §r" + player1.getNameTag() + " §7getauscht" );
+                    if(!GameState.getGameState().equals( GameState.WAIT )) player2.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player2.getLocale(),"player-swap-message", player1.getNameTag() ) );
                     plugin.getTeleport().add( player2 );
                 }
 

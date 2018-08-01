@@ -33,7 +33,7 @@ public class WorldBorder {
                     vector.setY( (float) 0.5 );
                     player.setVelocity( vector );
                     player.playSound( player.getLocation(), Sound.BREAK, (byte) 1, SoundData.block( BlockWoodenDoor.class ) );
-                    player.sendMessage( plugin.getPrefix() + "§cDu hast das §eEnde der Welt §cerreicht " );
+                    player.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "worldborder.end" ) );
                     player.attack( 2, EntityDamageEvent.DamageSource.ENTITY_ATTACK );
                 }
             }

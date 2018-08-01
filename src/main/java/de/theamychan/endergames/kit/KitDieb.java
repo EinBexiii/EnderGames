@@ -29,8 +29,8 @@ public class KitDieb implements Kit, EventListener {
     }
 
     @Override
-    public String getDescription() {
-        return "Fähigkeit: Die Truhe wird sofort geleert und man bekommt für 12 Sekunden Speed";
+    public String getDescription( EntityPlayer player ) {
+        return plugin.getLocaleManager().translate( player.getLocale(), "kit-dieb-ability" );
     }
 
     @Override

@@ -36,19 +36,19 @@ public class WaitCountdown {
                 switch ( time ) {
 
                     case 10: case 5: case 4:
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Das Spiel startet in §e" + time + " §7Sekunden" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-wait-seconds", time ) ) );
                         break;
                     case 3:
                         GoMint.instance().getPlayers().forEach( all -> all.playSound( all.getLocation(), Sound.NOTE, (byte) 2 ) );
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Das Spiel startet in §e" + time + " §7Sekunden" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-wait-seconds", time ) ) );
                         break;
                     case 2:
                         GoMint.instance().getPlayers().forEach( all -> all.playSound( all.getLocation(), Sound.NOTE, (byte) 2 ) );
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Das Spiel startet in §e" + time + " §7Sekunden" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-wait-seconds", time ) ) );
                         break;
                     case 1:
                         GoMint.instance().getPlayers().forEach( all -> all.playSound( all.getLocation(), Sound.NOTE, (byte) 2 ) );
-                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + "§7Das Spiel startet in §e" + time + " §7Sekunde" ) );
+                        GoMint.instance().getPlayers().forEach( all -> all.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( all.getLocale(), "countdown-wait-second", time ) ) );
                         break;
                     case 0:
                         stop();
@@ -61,8 +61,8 @@ public class WaitCountdown {
                                 plugin.getKitManager().setKit( player, plugin.getKitManager().getKitBabar() );
                                 plugin.getKitManager().getKit( player ).setContent( player );
                             }
-                            player.sendMessage( plugin.getPrefix() + "§eDas Spiel beginnt!" );
-                            player.sendMessage( plugin.getPrefix() + "§7Du hast das Kit §e" + plugin.getKitManager().getKit( player ).getName() + " §7ausgewählt" );
+                            player.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "countdown-wait-start" ) );
+                            player.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "kit-selected", plugin.getKitManager().getKit( player ).getName() ));
                         }
                         GameState.setGameState( GameState.PEACEFUL );
                         plugin.getPeacefulCountdown().start();

@@ -13,6 +13,7 @@ import io.gomint.event.player.PlayerInteractEvent;
 import io.gomint.gui.ButtonList;
 import io.gomint.gui.FormListener;
 import io.gomint.gui.Modal;
+import io.gomint.inventory.Inventory;
 import io.gomint.inventory.item.*;
 import io.gomint.math.Location;
 import io.gomint.world.Gamemode;
@@ -44,18 +45,18 @@ public class PlayerInteractListener implements EventListener {
         if ( GameState.getGameState().equals( GameState.LOBBY ) ) {
             if ( item instanceof ItemChest && item.getCustomName().equalsIgnoreCase( "§6Kits" ) ) {
                 ButtonList buttonList = ButtonList.create( "§6Kits" );
-                buttonList.addButton( "kitBabar", "Babar" );
-                buttonList.addButton( "kitArcher", "Archer" );
-                buttonList.addButton( "kitDieb", "Dieb" );
-                buttonList.addButton( "kitSchinken", "Schinken" );
-                buttonList.addButton( "kitSuppenmeister", "Suppenmeister" );
-                buttonList.addButton( "kitBomber", "Bomber" );
+                buttonList.addButton( "kitBabar", plugin.getLocaleManager().translate( player.getLocale(), "kit-name-babar" ) );
+                buttonList.addButton( "kitArcher", plugin.getLocaleManager().translate( player.getLocale(), "kit-name-archer" ) );
+                buttonList.addButton( "kitDieb", plugin.getLocaleManager().translate( player.getLocale(), "kit-name-thief" ) );
+                buttonList.addButton( "kitSchinken", plugin.getLocaleManager().translate( player.getLocale(), "kit-name-ham" ) );
+                buttonList.addButton( "kitSuppenmeister", plugin.getLocaleManager().translate( player.getLocale(), "kit-name-soupsmaster" ) );
+                buttonList.addButton( "kitBomber", plugin.getLocaleManager().translate( player.getLocale(), "kit-name-bomber" ) );
 
                 player.showForm( buttonList ).onResponse( id -> {
                     if ( id.equals( "kitBabar" ) ) {
-                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitBabar().getDescription());
-                        modal.setTrueButtonText( "Auswählen" );
-                        modal.setFalseButtonText( "Abbrechen" );
+                        Modal modal = Modal.create( plugin.getLocaleManager().translate( player.getLocale(), "kit-select-menu-title" ), plugin.getKitManager().getKitBabar().getDescription( player ));
+                        modal.setTrueButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-chose" ) );
+                        modal.setFalseButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-cancel" ) );
                         player.showForm( modal ).onResponse( bool ->{
                             Boolean success = Boolean.valueOf( String.valueOf( bool ) );
                             if(success){
@@ -63,9 +64,9 @@ public class PlayerInteractListener implements EventListener {
                             }
                         } );
                     } else if ( id.equals( "kitArcher" ) ) {
-                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitArcher().getDescription());
-                        modal.setTrueButtonText( "Auswählen" );
-                        modal.setFalseButtonText( "Abbrechen" );
+                        Modal modal = Modal.create( plugin.getLocaleManager().translate( player.getLocale(), "kit-select-menu-title" ), plugin.getKitManager().getKitArcher().getDescription( player ));
+                        modal.setTrueButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-chose" ) );
+                        modal.setFalseButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-cancel" ) );
                         player.showForm( modal ).onResponse( bool ->{
                             Boolean success = Boolean.valueOf( String.valueOf( bool ) );
                             if(success){
@@ -73,9 +74,9 @@ public class PlayerInteractListener implements EventListener {
                             }
                         } );
                     } else if ( id.equals( "kitDieb" ) ) {
-                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitDieb().getDescription());
-                        modal.setTrueButtonText( "Auswählen" );
-                        modal.setFalseButtonText( "Abbrechen" );
+                        Modal modal = Modal.create( plugin.getLocaleManager().translate( player.getLocale(), "kit-select-menu-title" ), plugin.getKitManager().getKitDieb().getDescription( player ));
+                        modal.setTrueButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-chose" ) );
+                        modal.setFalseButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-cancel" ) );
                         player.showForm( modal ).onResponse( bool ->{
                             Boolean success = Boolean.valueOf( String.valueOf( bool ) );
                             if(success){
@@ -83,9 +84,9 @@ public class PlayerInteractListener implements EventListener {
                             }
                         } );
                     } else if ( id.equals( "kitSchinken" ) ) {
-                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitSchinken().getDescription());
-                        modal.setTrueButtonText( "Auswählen" );
-                        modal.setFalseButtonText( "Abbrechen" );
+                        Modal modal = Modal.create( plugin.getLocaleManager().translate( player.getLocale(), "kit-select-menu-title" ), plugin.getKitManager().getKitSchinken().getDescription( player ));
+                        modal.setTrueButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-chose" ) );
+                        modal.setFalseButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-cancel" ) );
                         player.showForm( modal ).onResponse( bool ->{
                             Boolean success = Boolean.valueOf( String.valueOf( bool ) );
                             if(success){
@@ -93,9 +94,9 @@ public class PlayerInteractListener implements EventListener {
                             }
                         } );
                     } else if ( id.equals( "kitSuppenmeister" ) ) {
-                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitSuppenmeister().getDescription());
-                        modal.setTrueButtonText( "Auswählen" );
-                        modal.setFalseButtonText( "Abbrechen" );
+                        Modal modal = Modal.create( plugin.getLocaleManager().translate( player.getLocale(), "kit-select-menu-title" ), plugin.getKitManager().getKitSuppenmeister().getDescription( player ));
+                        modal.setTrueButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-chose" ) );
+                        modal.setFalseButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-cancel" ) );
                         player.showForm( modal ).onResponse( bool ->{
                             Boolean success = Boolean.valueOf( String.valueOf( bool ) );
                             if(success){
@@ -103,9 +104,9 @@ public class PlayerInteractListener implements EventListener {
                             }
                         } );
                     } else if ( id.equals( "kitBomber" ) ) {
-                        Modal modal = Modal.create( "Kit Auswählen", plugin.getKitManager().getKitBomber().getDescription());
-                        modal.setTrueButtonText( "Auswählen" );
-                        modal.setFalseButtonText( "Abbrechen" );
+                        Modal modal = Modal.create( plugin.getLocaleManager().translate( player.getLocale(), "kit-select-menu-title" ), plugin.getKitManager().getKitBomber().getDescription( player ));
+                        modal.setTrueButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-chose" ) );
+                        modal.setFalseButtonText( plugin.getLocaleManager().translate( player.getLocale(), "kit-cancel" ) );
                         player.showForm( modal ).onResponse( bool ->{
                             Boolean success = Boolean.valueOf( String.valueOf( bool ) );
                             if(success){
@@ -127,9 +128,11 @@ public class PlayerInteractListener implements EventListener {
         if ( !GameState.getGameState().equals( GameState.LOBBY ) ) {
             if ( block instanceof BlockEnderChest ) {
                 if(plugin.getIngame().contains( player )){
-                    BlockEnderChest chest = (BlockEnderChest) block;
-                    if ( !locations.contains( chest.getLocation() ) ) {
-                        List<ItemStack> items = plugin.getChestManager().fillChest( chest );
+                    BlockEnderChest enderChest = (BlockEnderChest) block;
+                    enderChest.setCustomName( "Enderchest" );
+                    Inventory inventory = enderChest.getInventory();
+                    if ( !locations.contains( enderChest.getLocation() ) ) {
+                        List<ItemStack> items = plugin.getChestManager().fillChest( enderChest );
                         locations.add( block.getLocation() );
                         plugin.getItemsMap().put( block, items );
                     }
@@ -181,9 +184,9 @@ public class PlayerInteractListener implements EventListener {
 
         if ( item instanceof ItemCompass && item.getCustomName().equalsIgnoreCase( "§5Tracker" ) ) {
             if ( getNearbyPlayer( player ) != null ) {
-                player.sendMessage( plugin.getPrefix() + "§7Spieler §r" + getNearbyPlayer( player ).getNameTag() + " §7getrackt: §e" + (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) + " Blöcke" );
+                player.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "tracker-message", getNearbyPlayer( player ).getNameTag(), (int) player.getLocation().distance( getNearbyPlayer( player ).getLocation() ) ) );
             } else {
-                player.sendMessage( plugin.getPrefix() + "§cEs konnte kein Spieler getrackt werden!" );
+                player.sendMessage( plugin.getPrefix() + plugin.getLocaleManager().translate( player.getLocale(), "trackker-message-fail" ) );
             }
         }
     }

@@ -1,5 +1,6 @@
 package de.theamychan.endergames.kit;
 
+import de.theamychan.endergames.EnderGames;
 import de.theamychan.endergames.kit.manager.Kit;
 import de.theamychan.endergames.util.ItemBuilder;
 import io.gomint.entity.EntityPlayer;
@@ -9,14 +10,20 @@ import io.gomint.inventory.item.*;
 
 public class KitBabar implements Kit {
 
+    private EnderGames plugin;
+
+    public KitBabar( EnderGames plugin ) {
+        this.plugin = plugin;
+    }
+
     @Override
     public String getName() {
         return "Babar";
     }
 
     @Override
-    public String getDescription() {
-        return "Ausrüstung: 1x Holzschwert und 1x Komplette Lederrüstung";
+    public String getDescription( EntityPlayer player ) {
+        return plugin.getLocaleManager().translate( player.getLocale(), "kit-babar-equipment" );
     }
 
     @Override

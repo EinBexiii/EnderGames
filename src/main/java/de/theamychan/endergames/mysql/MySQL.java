@@ -4,6 +4,7 @@ import de.theamychan.endergames.EnderGames;
 import lombok.Getter;
 
 import java.sql.*;
+import java.util.Locale;
 
 public class MySQL {
 
@@ -13,18 +14,13 @@ public class MySQL {
     @Getter
     private Connection connection;
 
-    private String host = "localhost";
-    private String database = "gomint";
-    private String username = "root";
-    private String password = "";
-
     public MySQL( EnderGames plugin ) {
         this.plugin = plugin;
         try {
-            connection = DriverManager.getConnection( "jdbc:mysql://" + host + ":3306/" + database + "?autoReconnect=true", username, password );
-            plugin.getLogger().info( "Die Verbindung zu MySQL wurde hergestellt!" );
+            connection = DriverManager.getConnection( "jdbc:mysql://" + plugin.getConfig().getMySQLHost()  + ":3306/" + plugin.getConfig().getMySQLDatabase() + "?autoReconnect=true", plugin.getConfig().getMySQLUser(), plugin.getConfig().getMySQLPassword() );
+            plugin.getLogger().info( plugin.getLocaleManager().translate( Locale.forLanguageTag( plugin.getConfig().getDefaultLocale() ), "mysql-connect-success" ) );
         } catch ( SQLException e ) {
-            plugin.getLogger().info( "Es konnte KEINE Verbindung hergestellt werden!" );
+            plugin.getLogger().info( plugin.getLocaleManager().translate( Locale.forLanguageTag( plugin.getConfig().getDefaultLocale() ), "mysql-connect-failed" ) );
         }
     }
 

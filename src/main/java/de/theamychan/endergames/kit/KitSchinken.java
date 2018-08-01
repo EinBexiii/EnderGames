@@ -34,8 +34,8 @@ public class KitSchinken implements Kit, EventListener {
     }
 
     @Override
-    public String getDescription() {
-        return "Ausrüstung: 1x Schinken " + "\n" + "\n" + "Fähigkeit: Mehr Damage und für 6 Sekunden Speed und einen Regenerations Effect";
+    public String getDescription( EntityPlayer player ) {
+        return plugin.getLocaleManager().translate( player.getLocale(), "kit-schinken-equipment" ) + "\n" + "\n" + plugin.getLocaleManager().translate( player.getLocale(), "kit-schinken-ability" );
     }
 
     @Override

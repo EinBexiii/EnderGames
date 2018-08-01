@@ -36,8 +36,8 @@ public class KitBomber implements Kit, EventListener {
     }
 
     @Override
-    public String getDescription() {
-        return "Ausrüstung: 5x TNT " + "\n" + "\n" + "Fähigkeit: Du bekommst durch Explosionen keinen Schaden und beim Töten hinterlässt du eine TNT Explosion.";
+    public String getDescription( EntityPlayer player ) {
+        return plugin.getLocaleManager().translate( player.getLocale(), "kit-bomber-equipment" ) + "\n" + "\n" + plugin.getLocaleManager().translate( player.getLocale(), "kit-bomber-ability" );
     }
 
     @Override
@@ -57,8 +57,6 @@ public class KitBomber implements Kit, EventListener {
 
     @EventHandler
     public void onEntityDamage( EntityDamageEvent e ) {
-        System.out.println("1: " + e.getDamageSource().toString());
-        System.out.println(e.getEntity().getClass().getSimpleName());
         if ( e.getEntity() instanceof EntityPlayer ) {
             EntityPlayer player = (EntityPlayer) e.getEntity();
 
@@ -73,7 +71,6 @@ public class KitBomber implements Kit, EventListener {
 
     @EventHandler
     public void onEntityDamageByEntity( EntityDamageByEntityEvent e ) {
-        System.out.println("1: " + e.getDamageSource().toString());
         if ( e.getEntity() instanceof EntityPlayer ) {
             EntityPlayer player = (EntityPlayer) e.getEntity();
 
@@ -133,7 +130,6 @@ public class KitBomber implements Kit, EventListener {
                     e.getItem().setAmount( newAmount );
                     player.getInventory().setItem( player.getInventory().getItemInHandSlot(), e.getItem() );
                 }
-
                 return;
             }
         }

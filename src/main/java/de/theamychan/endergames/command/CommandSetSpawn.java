@@ -10,6 +10,7 @@ import io.gomint.command.validator.IntegerValidator;
 import io.gomint.command.validator.StringValidator;
 import io.gomint.entity.EntityPlayer;
 
+import java.util.Locale;
 import java.util.Map;
 
 @Name( "setspawn" )
@@ -42,24 +43,24 @@ public class CommandSetSpawn extends Command {
                 output.fail( "Usage: /setspawn <spectator>" );
             } else {
                 EnderGames.getInstance().getLocationAPI().addLocation( player.getLocation(), "Spectator", true );
-                output.success( "Du hast den Spectatorspawn gesetzt!" );
+                output.success( EnderGames.getInstance().getLocaleManager().translate( player.getLocale(), "command-setspawn.spectator" ) );
             }
 
             if( lobby.equals( "" ) ) {
                 output.fail( "Usage: /setspawn <lobby>" );
             } else {
                 EnderGames.getInstance().getLocationAPI().addLocation( player.getLocation(), "Lobby", true );
-                output.success( "Du hast den Lobbyspawn gesetzt!" );
+                output.success( EnderGames.getInstance().getLocaleManager().translate( player.getLocale(), "command.setspawn.lobby" ) );
             }
 
             if( id == null ) {
                 output.fail( "Usage: /setspawn <id>" );
             } else {
                 EnderGames.getInstance().getLocationAPI().addLocation( player.getLocation(), "Spawn." + id, true );
-                output.success( "Du hast den Spawn " + id + " gesetzt!" );
+                output.success( EnderGames.getInstance().getLocaleManager().translate( player.getLocale(), "command.setspawn.spawn", id ) );
             }
         } else {
-            output.fail( "Du musst diesen Command Ingame ausführen!" );
+            output.fail( EnderGames.getInstance().getLocaleManager().translate( Locale.GERMANY, "command.use.ingame" ) );
         }
         return output;
     }
