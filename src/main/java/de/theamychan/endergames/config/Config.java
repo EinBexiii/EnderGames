@@ -6,8 +6,9 @@ import lombok.Getter;
 @Getter
 public class Config extends YamlConfig {
 
-    private String arenaName = "Arena";
+    private String prefix = "§f[§5EnderGames§f] ";
 
+    private String arenaName = "Arena";
     private String defaultLocale = "GERMANY";
 
     private int minPlayers = 2;

@@ -91,7 +91,7 @@ public class EnderGames extends Plugin {
     private World world;
 
     @Getter
-    private String prefix = "§f[§5EnderGames§f] ";
+    private String prefix;
 
     @Getter
     private int minPlayers;
@@ -112,6 +112,9 @@ public class EnderGames extends Plugin {
     @Getter
     private Map<Block, List<ItemStack>> itemsMap = new HashMap<>();
 
+    private File de_DE = new File( this.getDataFolder().getAbsolutePath() + "/language", "de_DE.properties" );
+    private File en_US = new File( this.getDataFolder().getAbsolutePath() + "/language", "en_US.properties" );
+
     @Override
     public void onInstall() {
         instance = this;
@@ -123,30 +126,22 @@ public class EnderGames extends Plugin {
             e.printStackTrace();
         }
 
+        this.prefix = this.config.getPrefix();
+
         this.minPlayers = this.config.getMinPlayers();
         this.maxPlayers = this.config.getMaxPlayers();
 
-        File de_DE = new File( this.getDataFolder().getAbsolutePath() + "/language", "de_DE.properties" );
-        File en_EN = new File( this.getDataFolder().getAbsolutePath() + "/language", "en_US.properties" );
-
-        if ( !de_DE.exists() ) {
-            try {
-                FileUtils.copyInputStreamToFile( getResourceAsStream( "de_DE.properties" ), de_DE );
-            } catch ( IOException e ) {
-                e.printStackTrace();
-            }
-        }
-        if ( !en_EN.exists() ) {
-            try {
-                FileUtils.copyInputStreamToFile( getResourceAsStream( "en_US.properties" ), en_EN );
-            } catch ( IOException e ) {
-                e.printStackTrace();
-            }
+        try{
+            if(!de_DE.exists()) FileUtils.copyInputStreamToFile( getResourceAsStream( "de_DE.properties" ), de_DE );
+            if(!en_US.exists()) FileUtils.copyInputStreamToFile( getResourceAsStream( "en_US.properties" ), en_US );
+        }catch ( IOException e ) {
+            e.printStackTrace();
         }
 
         this.localeManager = new LocaleManager( this );
         this.localeManager.setDefaultLocale( Locale.forLanguageTag( this.config.getDefaultLocale() ) );
         this.localeManager.initFromLocaleFolder( new File( this.getDataFolder().getAbsolutePath() + "/language" ) );
+        
         this.schematicSystem = SchematicSystem.getInstance();
 
         GameState.setGameState( GameState.LOBBY );
